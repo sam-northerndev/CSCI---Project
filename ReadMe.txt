@@ -12,17 +12,82 @@ Due date: Apr 10th (I think?)
 Ideas:
 	* Turn-based
 	* Grid maps (variation in map-making)
-	* Story arch
-	* Characters (minimum of 4)
-	* Some sort of simple npc monster
-	* Characters to interact with
-	* Character progression with level
+	* Story arch //likely not this
+	* Characters (minimum of 4)//Each person can design a character or two
+	* Some sort of simple npc monster//optional
+	* Characters to interact with //optional (leaning toward no)
+	* Character progression with level (In game progression)
 	* Unique characters or classes of characters
-	* Possible GUI implementation.
-
-
+	* GUI implementation
+	* Up to three characters on each team
+	* Move two characters per turn
+	* Levelling system (in game)
+	* Files checked during launch and saved at end
+	* protecting some object
+	* GUI windows to display grid (possibly overalyed on an image)
+	* Different data nodes for linked list to create obstacles
+	
 Work to do:
-Start with one character with simple grid map, test movement, attack, controls, etc.
+
+Classes:
+
+Board (
+-
+-
+)
+
+Character {//Xp and 
+attributes:
+HP:
+Movement:
+Damage: 
+Defense:
+Inventory:
+XP
+character portraits (GUI implementation):
+}
+
+Obstacle {
+-
+-
+}
+
+Monster { //optional
+-
+-
+-
+}
+
+Objective {
+-isCaptured
+-HP
+-team
+}
+
+Loading/saving { //filling in blank attributes on character objects.
+-
+-
+-
+}
+Linked List {
+-
+-
+-
+}
+Node {
+-  different data, ie obstacles, characters, empty space
+- next
+- get data
+}
+
+
+
+
+
+
+
+
+
 
 
 
