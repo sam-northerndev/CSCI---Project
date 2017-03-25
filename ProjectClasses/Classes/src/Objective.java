@@ -1,6 +1,6 @@
 
 public class Objective {
-	public int hp;
+	private int hp;
 	
 	public Objective() {
 		hp = 1000;
