@@ -1,1 +1,0 @@
-INDEX VERSION 1.129+C:\Users\Sam\Documents\GitHub\CSCI---Project\.metadata\.plugins\org.eclipse.jdt.core
