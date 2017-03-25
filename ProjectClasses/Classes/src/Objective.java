@@ -6,7 +6,7 @@ public class Objective {
 		hp = 1000;
 		
 	}
-	public boolean Destroyed() {
+	public boolean Destroyed() { // if the objective is destroyed
 		if (hp < 0) {
 			return true;
 		}
@@ -14,7 +14,7 @@ public class Objective {
 			return false;
 		}
 	}
-	public void Attacked(Character c) {
+	public void Attacked(Character c) { // loses hp if objective is attacked
 		if (c.attack) {
 			hp -= c.getattack;
 		}
