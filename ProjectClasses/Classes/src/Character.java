@@ -3,16 +3,29 @@
  */
 public class Character {
 	private int level;
+	//hp is the hit points (Health) of the character)
 	private int hp;
+	//Strength is the physical damage done to a character
 	private int strength;
+	//Magic is the magic damage done to a character
 	private int magic;
+	//resistance is the magic defense
+	private int resistance;
+	//physical defense
 	private int defense;
+	//XP that increases when the character attacks/kills an enemy
 	private int XP;
 	//This boolean might not be necessary
 	private boolean alive;
 	
 	//no-args Constructor that sets alive as true
-	public Character(){
+	public Character(int hp, int str, int mag, int res, int def){
+		this.hp = hp;
+		strength = str;
+		magic = mag;
+		resistance = res;
+		defense = def;
+		level = 1;
 		alive = true;
 	}
 	
