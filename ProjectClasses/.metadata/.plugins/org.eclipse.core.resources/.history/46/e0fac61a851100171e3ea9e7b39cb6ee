@@ -1,13 +1,9 @@
-/*Written March 25th, 2017
- the Grid map will be made up of blank space will include methods to:
-**** generate obstacles, generate objective, add three character objects, move a character ****
- */
 import java.util.LinkedList;
 import java.util.Random;
 
 public class GridMap {
   
-	private LinkedList<EmptySpace>[][] grid = new LinkedList<Space>[1][8];
+	private LinkedList<Space>[][] grid = new LinkedList<Space>[1][8];
 	
 	public GridMap() {
 		
@@ -21,8 +17,7 @@ public class GridMap {
 				guess = rnd.nextInt(10);
 				if (guess == target) {
 					Obstacles obst = new Obstacle();
-					grid[1][i].add(obst); //setting the data at [1][i] to append to the end.
-				
+					grid[1][i].addToEnd(obst); //setting the data at [1][i] to append to the end.
 				}				 
 		}
 			
