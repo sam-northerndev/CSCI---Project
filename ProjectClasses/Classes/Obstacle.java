@@ -18,6 +18,15 @@ public class Obstacle {
 			name = "Hole";
 		}
  	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String n) {
+		name = n;
+	}
+	
 	
 	
 

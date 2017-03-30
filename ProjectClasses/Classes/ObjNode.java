@@ -2,8 +2,8 @@
 public class ObjNode {
 	private Objective data;
 	private ObjNode next;
-	public ObjNode(Objective o, ObjNode n) {
-	
+	public ObjNode(ObjNode n) {
+		Objective o = new Objective();
 		data = o;
 		next = n;
 	}

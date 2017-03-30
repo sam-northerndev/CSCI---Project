@@ -2,9 +2,10 @@
 public class EmpNode {
 	private EmptySpace data;
 	private EmpNode next;
-	public EmpNode(EmptySpace d, EmpNode n) {
+	public EmpNode(EmpNode n) {
+		EmptySpace e = new EmptySpace();
 	
-		data = d;
+		data = e;
 		next = n;
 	}
 	public EmptySpace getData() {

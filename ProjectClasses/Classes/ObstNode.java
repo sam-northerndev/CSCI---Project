@@ -2,9 +2,10 @@
 public class ObstNode {
 	private Obstacle data;
 	private ObstNode next;
-	public ObstNode(Obstacle d, ObstNode n) {
+	public ObstNode(ObstNode n) {
+		Obstacle o = new Obstacle();
 	
-		data = d;
+		data = o;
 		next = n;
 	}
 	public Obstacle getData() {
