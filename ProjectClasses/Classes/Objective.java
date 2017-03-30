@@ -16,7 +16,7 @@ public class Objective {
 	}
 	public void attacked(Character c) { // loses hp if objective is attacked
 
-		hp -= c.getAttack;
+		hp -= c.attack();
 
 	}
 	public int getHp() {
