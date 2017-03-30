@@ -1,4 +1,3 @@
-
 public class Objective {
 	private int hp;
 	
@@ -16,7 +15,7 @@ public class Objective {
 	}
 	public void attacked(Character c) { // loses hp if objective is attacked
 
-		hp -= c.getAttack;
+		hp -= c.Attack();
 
 	}
 	public int getHp() {
