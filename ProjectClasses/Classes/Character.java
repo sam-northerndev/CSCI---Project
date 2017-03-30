@@ -2,6 +2,7 @@
  * Started March 25, 2017
  */
 public class Character {
+	private String name;
 	private int level;
 	//hp is the hit points (Health) of the character)
 	private int hp;
@@ -18,7 +19,7 @@ public class Character {
 	//This boolean might not be necessary
 	private boolean alive;
 	
-	//no-args Constructor that sets alive as true
+	//Constructor that sets alive as true
 	public Character(int hp, int str, int mag, int res, int def){
 		this.hp = hp;
 		strength = str;
@@ -27,6 +28,10 @@ public class Character {
 		defense = def;
 		level = 1;
 		alive = true;
+	}
+	
+	public Character(String n){
+		name = n;
 	}
 	
 	//Method that calculates the damage done to an enemy unit
@@ -52,4 +57,11 @@ public class Character {
 	public boolean isAlive(){
 		return alive;
 	}
+	
+	//Get name
+	public String getName(){
+		return name;
+	}
+	
+	
 }

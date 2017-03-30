@@ -1,11 +1,34 @@
 /* Node class */
 public class Node{
 
-   //attributes 
+   //attributes
    private Node next; 
+   private EmptySpace empSpace;
+   private Character character;
+   private Obstacle obstacle;
+   private Objective objective;
    
-   //constructor 
-   public Node(Node n){ 
+   //constructor for EmptySpace
+   public Node(EmptySpace emp, Node n){
+	  empSpace = emp;
+      next=n; 
+   }
+   
+   //Constructor for Character
+   public Node(Character c, Node n){
+	  character = c;
+      next=n; 
+   }
+   
+   //Constructor for Obstacle
+   public Node(Obstacle o, Node n){
+	  obstacle = o;
+      next=n; 
+   }
+   
+   //Constructor for Objective
+   public Node(Objective ob, Node n){
+	  objective = ob;
       next=n; 
    }
    
@@ -18,4 +41,36 @@ public class Node{
       return next; 
    }
    
+   //Get and set Data for EmptySpace
+	public EmptySpace getEmptySpace() {
+		return empSpace;
+	}
+	
+	public void setData(EmptySpace emp){
+		empSpace = emp;
+	}
+
+	public Character getCharacter() {
+		return character;
+	}
+
+	public void setData(Character character) {
+		this.character = character;
+	}
+
+	public Obstacle getObstacle() {
+		return obstacle;
+	}
+
+	public void setData(Obstacle obstacle) {
+		this.obstacle = obstacle;
+	}
+
+	public Objective getObjective() {
+		return objective;
+	}
+
+	public void setData(Objective objective) {
+		this.objective = objective;
+	}
 }                     

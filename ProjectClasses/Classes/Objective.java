@@ -1,7 +1,10 @@
+
 public class Objective {
+	private String team;
 	private int hp;
 	
-	public Objective() {
+	public Objective(String color) {
+		team = color;
 		hp = 1000;
 		
 	}
@@ -15,11 +18,7 @@ public class Objective {
 	}
 	public void attacked(Character c) { // loses hp if objective is attacked
 
-<<<<<<< HEAD
-		hp -= c.Attack();
-=======
 		hp -= c.attack();
->>>>>>> origin/master
 
 	}
 	public int getHp() {
@@ -28,6 +27,8 @@ public class Objective {
 	public void setHp(int hp) {
 		this.hp = hp;
 	}
-	
+	public String toString() {
+		return team;
+	}
 	
 }

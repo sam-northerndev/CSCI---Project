@@ -36,8 +36,8 @@ public class LinkedList{
       count=0; 
    }
    
-   //method 6: ge the reference to the first node 
-   public Node getFrontNode(){
+   //method 6: get the reference to the first node 
+   public Node getFront(){
       return front; 
    }
    
@@ -139,7 +139,23 @@ public class LinkedList{
       }
       return curr; 
    }
-}                           
+   public void replace(int index, Node n) {
+	   if(index<0||index >=size())
+	         System.out.println("Out of bounds."); 
+	      else if(index==0)
+	         addToFront(n); 
+	      else {
+	         Node curr=front;
+	         for(int i=0; i < index-1; i++)
+	             curr=curr.getNext();
+	         Node temp = curr.getNext().getNext();
+	         n.setNext(temp);
+	         curr.setNext(n);
+	         
+	      }
+	}
+}
+
                
                      
                                                                                                          
