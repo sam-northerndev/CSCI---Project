@@ -31,7 +31,7 @@ public class Character {
 	
 	//Method that calculates the damage done to an enemy unit
 	//Takes into account the strength of the character
-	public int Attack(){
+	public int attack(){
 		//The damage done by the character can be calculated in a different way
 		return strength*2;
 	}
@@ -39,7 +39,7 @@ public class Character {
 	//Method that calculates the damage taken from an attack
 	//Removes the HP taken from another characters damage
 	//also checks if the character is dead (i.e if hp is less than or equal to 0)
-	public void Defend(int damage){
+	public void defend(int damage){
 		hp = hp - (damage/defense);
 		if (hp <= 0){
 			alive = false;

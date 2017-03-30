@@ -12,16 +12,8 @@ public class Node{
    }
    
    //get and set methods
-   public void setData(String d){
-      data=d; 
-   }
-   
    public void setNext(Node n){
       next=n;
-   }
-   
-   public String getData(){
-      return data; 
    }
    
    public Node getNext(){

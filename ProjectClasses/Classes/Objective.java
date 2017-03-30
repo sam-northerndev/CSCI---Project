@@ -15,7 +15,11 @@ public class Objective {
 	}
 	public void attacked(Character c) { // loses hp if objective is attacked
 
+<<<<<<< HEAD
 		hp -= c.Attack();
+=======
+		hp -= c.attack();
+>>>>>>> origin/master
 
 	}
 	public int getHp() {

@@ -12,8 +12,7 @@ public class LinkedList{
    }
    
    //method 1: add new node to the front of the list 
-   public void addToFront(String d){ 
-      Node n= new Node(d, front); 
+   public void addToFront(Node n){  
       front= n; 
       count ++; 
    }
@@ -35,11 +34,6 @@ public class LinkedList{
    public void clear(){
       front= null; 
       count=0; 
-   }
-   
-   //method 5: get front data 
-   public String getFrontData(){
-      return front.getData();
    }
    
    //method 6: ge the reference to the first node 
@@ -71,8 +65,7 @@ public class LinkedList{
    } 
    
    //method 9: add Node to the end of the list 
-   public void addToEnd(String d){ 
-      Node n= new Node(d, null); 
+   public void addToEnd(Node n){  
       if(isEmpty())
          front=n; 
       else{
@@ -84,7 +77,7 @@ public class LinkedList{
       }
       count++; 
    } 
-   
+ 
    //method 10: remove the last node 
    public void removeLast(){ 
       if(isEmpty())
@@ -101,39 +94,21 @@ public class LinkedList{
       }
       count--; 
    }
-   
-   //method 11: returns index of given string 
-   public int contains(String d){
-      Node curr=front; 
-      int index=-1;
-      boolean found= false; 
-      while(curr!=null&&!found){
-         index++; 
-         if(curr.getData().equals(d))
-            found=true; 
-         curr=curr.getNext(); 
-      }
-      if(!found)
-         return -1; 
-      else 
-         return index; 
-   }
-   
+
    //method 12: add node at a given index
-   public void add(int index, String d){ 
+   public void add(int index, Node n){ 
       if(index<0||index >=size())
          System.out.println("Out of bounds."); 
       else if(index==0)
-         addToFront(d); 
+         addToFront(n); 
       else{
          Node curr=front; 
          for(int i=0; i<index; i++)
             curr=curr.getNext();   
-         Node n= new Node(d, curr.getNext());
          curr.setNext(n); 
          count++;   
       }
-   }   
+   }  
       
    //method 13: remove a node at a given index 
    public void remove(int index){ 
