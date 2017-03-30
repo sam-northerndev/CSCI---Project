@@ -1,13 +1,11 @@
 /* Node class */
 public class Node{
 
-   //attributes
-   private String data; 
+   //attributes 
    private Node next; 
    
    //constructor 
-   public Node(String d, Node n){
-      data=d; 
+   public Node(Node n){ 
       next=n; 
    }
    
@@ -20,8 +18,4 @@ public class Node{
       return next; 
    }
    
-   //toString method 
-   public String toString(){
-      return data + "-->";
-   }
 }                     
