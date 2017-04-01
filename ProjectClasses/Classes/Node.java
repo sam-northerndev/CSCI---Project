@@ -49,7 +49,7 @@ public class Node{
 	public void setData(EmptySpace emp){
 		empSpace = emp;
 	}
-
+	//Get and Set Data for Character
 	public Character getCharacter() {
 		return character;
 	}
@@ -57,7 +57,7 @@ public class Node{
 	public void setData(Character character) {
 		this.character = character;
 	}
-
+	//Get and Set Data for Obstacles
 	public Obstacle getObstacle() {
 		return obstacle;
 	}
@@ -65,7 +65,7 @@ public class Node{
 	public void setData(Obstacle obstacle) {
 		this.obstacle = obstacle;
 	}
-
+	//Get and Set Data for Onjective
 	public Objective getObjective() {
 		return objective;
 	}

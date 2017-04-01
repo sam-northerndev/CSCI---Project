@@ -140,16 +140,16 @@ public class LinkedList{
       return curr; 
    }
    public void replace(int index, Node n) {
-	   if(index<0||index >=size())
+	   if(index<0||index >=size())//check to make sure the index in bounds, or at the front --> add to front.
 	         System.out.println("Out of bounds."); 
 	      else if(index==0)
 	         addToFront(n); 
 	      else {
 	         Node curr=front;
-	         for(int i=0; i < index-1; i++)
-	             curr=curr.getNext();
-	         Node temp = curr.getNext().getNext();
-	         n.setNext(temp);
+	         for(int i=0; i < index-1; i++) //getting to element that must be replaced.
+	             curr=curr.getNext();//curr is now element before one that needs to be replaced
+	         Node temp = curr.getNext().getNext(); //temp node to hold the next of the element that needs to be replaced
+	         n.setNext(temp);//replacing the element 
 	         curr.setNext(n);
 	         
 	      }
