@@ -111,8 +111,13 @@ public class GridMap {
              temp2= grid[0][i-1].getNode(index); 
          }                       
             
-         temp.setData(e);   
-         temp2.setData(c);   
+         temp.setData(e);
+         Character ch = null;
+         EmptySpace emp = null;
+         temp.setData(ch);
+         temp2.setData(c);
+         temp2.setData(emp);
+         
       }
       
    }             
@@ -124,7 +129,7 @@ public class GridMap {
 		map.generateCharacter(new Character("Man"), new Character("Woman"), new Character("Child"),"red");
 		map.generateObstacles();
 		map.generateObjective();
-      map.moveChar("right",c);
+        map.moveChar("right",c);
 		map.displayMap();
 	}
 	
