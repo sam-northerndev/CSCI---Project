@@ -75,15 +75,56 @@ public class GridMap {
 		}
 	}
 	
-	public void moveChar() {
-	
-	}
+	public void moveChar(String direction, Character c){
+      int index=0;
+      int i=0;
+      
+      for (i=0; i < 8; i++ ){
+         index=0;
+         Node n = grid[0][i].getFront();
+         while (grid[0][i].getNode(index).getCharacter()!=c&&index<7){
+            n = n.getNext();
+            index++;
+         } 
+         if (index<7)
+            break;     
+      }      
+   
+      if(grid[0][i].getNode(index).getCharacter()!=null){
+         Node temp=null, temp2=null;
+         EmptySpace e= new EmptySpace();
+         
+         if (direction.equals("right")){
+             temp = grid[0][i].getNode(index);
+             temp2= grid[0][i].getNode(index+1);
+         }        
+         if (direction.equals("left")){
+             temp = grid[0][i].getNode(index);
+             temp2= grid[0][i].getNode(index-1);
+         } 
+         if (direction.equals("front")){
+             temp = grid[0][i].getNode(index);
+             temp2= grid[0][i+1].getNode(index); 
+         }    
+         if (direction.equals("back")){
+             temp = grid[0][i].getNode(index);
+             temp2= grid[0][i-1].getNode(index); 
+         }                       
+            
+         temp.setData(e);   
+         temp2.setData(c);   
+      }
+      
+   }             
+                   
 	public static void main (String[] args){
 		GridMap map = new GridMap();
-		map.generateCharacter(new Character("Steve"), new Character("Craig"), new Character("Sam"),"blue");
+      Character c = new Character("Steve");
+		map.generateCharacter(c, new Character("Craig"), new Character("Sam"),"blue");
 		map.generateCharacter(new Character("Man"), new Character("Woman"), new Character("Child"),"red");
 		map.generateObstacles();
 		map.generateObjective();
+      map.moveChar("right",c);
 		map.displayMap();
 	}
 	
