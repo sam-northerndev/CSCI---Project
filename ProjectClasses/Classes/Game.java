@@ -31,7 +31,4 @@ public class Game extends Application{
 		stage.setResizable(true);
 		stage.show();
 	}
-	public static void main (String[] args){
-		Application.launch(args);
-	}
 }
