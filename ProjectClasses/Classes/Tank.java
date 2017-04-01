@@ -4,7 +4,7 @@
  */
 public class Tank extends Character{
 	public Tank(){
-		super (30,3,1,1,4);
+		super (30,3,1,1,1,4);
       setType(3);
 	}
 

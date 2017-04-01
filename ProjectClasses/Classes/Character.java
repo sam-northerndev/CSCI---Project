@@ -12,6 +12,8 @@ public class Character {
 	private int hp;
 	//Strength is the physical damage done to a character
 	private int strength;
+   //Dexterity
+   private int dexterity;
 	//Magic is the magic damage done to a character
 	private int magic;
 	//resistance is the magic defense
@@ -24,7 +26,7 @@ public class Character {
 	private boolean alive;
 	
 	//Constructor that sets alive as true
-	public Character(int hp, int str, int mag, int res, int def){
+	public Character(int hp, int str, int dex, int mag, int res, int def){
 		this.hp = hp;
 		strength = str;
 		magic = mag;
@@ -42,9 +44,9 @@ public class Character {
 	//Takes into account the strength of the character
 	public double Attack(){
 		//The damage done by the character can be calculated in a different way
-      //rouge
+      //ranger
       if(type == 0)
-		   return strength*1.2;
+		   return dexterity*1.2;
       //warrior
       else if (type == 1)
          return strength*2;
@@ -62,12 +64,21 @@ public class Character {
    {
       type = t;
    }
+   
+   public int getType()
+   {
+      return type;
+   }
 	
 	//Method that calculates the damage taken from an attack
 	//Removes the HP taken from another characters damage
 	//also checks if the character is dead (i.e if hp is less than or equal to 0)
-	public void defend(int damage){
-		hp = hp - (damage/defense);
+	public void defend(Character r){
+      //checks if attacking character is a mage or not
+      if(r.getType() == 2)
+         hp = (int)(hp - (r.Attack()/resistance));
+      else 
+		   hp = (int)(hp - (r.Attack()/defense));
 		if (hp <= 0){
 			alive = false;
 		}

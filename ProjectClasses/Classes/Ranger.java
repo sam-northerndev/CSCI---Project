@@ -6,7 +6,7 @@
 public class Ranger extends Character {
 
 	public Ranger(){
-		super (20,4,3,1,2);
+		super (20,2,4,3,1,2);
       setType(0);
 	}
   
