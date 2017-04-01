@@ -4,7 +4,10 @@
  * Started March 25, 2017
  */
 public class Ranger extends Character {
+
 	public Ranger(){
 		super (20,4,3,1,2);
+      setType(0);
 	}
+  
 }

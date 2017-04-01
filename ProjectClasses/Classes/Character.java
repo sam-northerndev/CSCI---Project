@@ -2,7 +2,11 @@
  * Started March 25, 2017
  */
 public class Character {
+   //type of character
+   private int type;
+   //name of character
 	private String name;
+   //level of character
 	private int level;
 	//hp is the hit points (Health) of the character)
 	private int hp;
@@ -36,10 +40,28 @@ public class Character {
 	
 	//Method that calculates the damage done to an enemy unit
 	//Takes into account the strength of the character
-	public int attack(){
+	public double Attack(){
 		//The damage done by the character can be calculated in a different way
-		return strength*2;
+      //rouge
+      if(type == 0)
+		   return strength*1.2;
+      //warrior
+      else if (type == 1)
+         return strength*2;
+      //mage
+      else if (type == 2)
+         return magic*2;
+      //tank
+      else
+         return strength*1.7;
+      
 	}
+   
+   //sets type of character
+   public void setType(int t)
+   {
+      type = t;
+   }
 	
 	//Method that calculates the damage taken from an attack
 	//Removes the HP taken from another characters damage

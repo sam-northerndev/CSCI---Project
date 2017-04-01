@@ -5,6 +5,7 @@
 public class Warrior extends Character {
 	public Warrior(){
 		super(25,4,1,2,3);
+      setType(1);
 	}
 
 }

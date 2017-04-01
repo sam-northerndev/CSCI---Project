@@ -6,6 +6,7 @@
 public class Mage extends Character {
 	public Mage(){
 		super (15,1,4,5,2);
+      setType(2);
 	}
 
 }
