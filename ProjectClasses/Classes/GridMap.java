@@ -4,6 +4,8 @@ import java.util.Random;
 public class GridMap {
   
 	private LinkedList[][] grid = new LinkedList[1][8];
+   private static boolean walk = false;
+   private static int turn = 0;
 	
 	public GridMap() { // Populating the grid with empty spaces
 		for(int i = 0; i < 8; i++) { // for loop for each row
@@ -89,6 +91,8 @@ public class GridMap {
          if (index<7)
             break;     
       }      
+      
+      boolean walk = false;
    
       if(grid[0][i].getNode(index).getCharacter()!=null){
          Node temp=null, temp2=null;
@@ -96,19 +100,31 @@ public class GridMap {
          
          if (direction.equals("right")){
              temp = grid[0][i].getNode(index);
-             temp2= grid[0][i].getNode(index+1);
+             if(!(index+1 > 7)){
+               temp2= grid[0][i].getNode(index+1);
+               walk = true;
+             }
          }        
          if (direction.equals("left")){
              temp = grid[0][i].getNode(index);
-             temp2= grid[0][i].getNode(index-1);
+             if(!(index-1 < 0)) {
+               temp2= grid[0][i].getNode(index-1);
+               walk = true;
+             }
          } 
          if (direction.equals("front")){
              temp = grid[0][i].getNode(index);
-             temp2= grid[0][i+1].getNode(index); 
+             if(!(i+1 > 7)){
+               temp2= grid[0][i+1].getNode(index); 
+               walk = true;
+             }
          }    
          if (direction.equals("back")){
              temp = grid[0][i].getNode(index);
-             temp2= grid[0][i-1].getNode(index); 
+             if(!(i-1 < 0)){
+               temp2= grid[0][i-1].getNode(index); 
+               walk = true;
+             }
          }                       
             
          temp.setData(e);
@@ -117,7 +133,10 @@ public class GridMap {
          temp.setData(ch);
          temp2.setData(c);
          temp2.setData(emp);
-         
+         if(walk == true){
+            turn++;
+            walk = false;
+         }
       }
       
    }             
