@@ -1,7 +1,7 @@
 /* Linked List class*/ 
 public class LinkedList{
    
-   //atributes
+   //attributes
    private Node front; 
    private int count; 
    

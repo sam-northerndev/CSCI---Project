@@ -75,6 +75,7 @@ public class GridMap {
 				temp = temp.getNext();
 			}
 		}
+		System.out.println();
 	}
 	
 	//Moves the character to a another spot on the board
@@ -84,18 +85,17 @@ public class GridMap {
       int i;
       
       //Finds the character in the array of LinkedList
-      for (i=0; i < 8; i++ ){
+      for (i=0; i < 8; i++){
     	 index = 0;
          Node n = grid[0][i].getFront();
-         while (grid[0][i].getNode(index).getCharacter() != c && index < 7){
+         while (index < 8 && grid[0][i].getNode(index).getCharacter() != c){
             n = n.getNext();
             index++;
-         } 
-         if (index<7)
-            break;     
-      }      
+         }
+         if (index < 8)
+        	 break;
+      }
       boolean walk = false;
-      
       //Move the character in the specified direction
       if(grid[0][i].getNode(index).getCharacter()!=null){
          Node temp=null, temp2=null;
@@ -103,7 +103,7 @@ public class GridMap {
          
          if (direction.equals("right")){
              temp = grid[0][i].getNode(index);
-             if(!(index+1 > 7)){
+             if(index+1 < 8){
                temp2= grid[0][i].getNode(index+1);
                if(temp2.getEmptySpace() != null)
             	   walk = true;
@@ -111,7 +111,7 @@ public class GridMap {
          }        
          if (direction.equals("left")){
              temp = grid[0][i].getNode(index);
-             if(!(index-1 < 0)) {
+             if(index-1 >= 0) {
                temp2= grid[0][i].getNode(index-1);
                if(temp2.getEmptySpace() != null)
             	   walk = true;
@@ -119,7 +119,7 @@ public class GridMap {
          } 
          if (direction.equals("down")){
              temp = grid[0][i].getNode(index);
-             if(!(i+1 > 7)){
+             if(i+1 < 8){
                temp2= grid[0][i+1].getNode(index); 
                if(temp2.getEmptySpace() != null)
             	   walk = true;
@@ -127,7 +127,7 @@ public class GridMap {
          }    
          if (direction.equals("up")){
              temp = grid[0][i].getNode(index);
-             if(!(i-1 < 0)){
+             if(i-1 < 8){
                temp2= grid[0][i-1].getNode(index); 
                if(temp2.getEmptySpace() != null)
             	   walk = true;
@@ -156,7 +156,10 @@ public class GridMap {
 		map.displayMap();
 		System.out.println();
         map.moveChar("right",c);
+        map.displayMap();
         map.moveChar("down", c);
+		map.displayMap();
+		map.moveChar("up", c);
 		map.displayMap();
 	}
 	

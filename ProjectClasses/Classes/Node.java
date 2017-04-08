@@ -48,6 +48,9 @@ public class Node{
 	
 	public void setData(EmptySpace emp){
 		empSpace = emp;
+		character = null;
+		obstacle = null;
+		objective = null;
 	}
 	//Get and Set Data for Character
 	public Character getCharacter() {
@@ -56,6 +59,9 @@ public class Node{
 
 	public void setData(Character character) {
 		this.character = character;
+		empSpace = null;
+		obstacle = null;
+		objective = null;
 	}
 	//Get and Set Data for Obstacles
 	public Obstacle getObstacle() {
@@ -64,6 +70,9 @@ public class Node{
 
 	public void setData(Obstacle obstacle) {
 		this.obstacle = obstacle;
+		empSpace = null;
+		character = null;
+		objective = null;
 	}
 	//Get and Set Data for Onjective
 	public Objective getObjective() {
@@ -72,5 +81,8 @@ public class Node{
 
 	public void setData(Objective objective) {
 		this.objective = objective;
+		empSpace = null;
+		character = null;
+		obstacle = null;
 	}
 }                     
