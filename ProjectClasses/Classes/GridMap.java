@@ -4,8 +4,7 @@ import java.util.Random;
 public class GridMap {
   
 	private LinkedList[][] grid = new LinkedList[1][8];
-   private static boolean walk = false;
-   private static int turn = 0;
+	private static int turn = 0;
 	
 	public GridMap() { // Populating the grid with empty spaces
 		for(int i = 0; i < 8; i++) { // for loop for each row
@@ -26,14 +25,13 @@ public class GridMap {
 			int count = 0; //keep track of where to place the new obstacle
 			while (temp != null) {
 				guess = rnd.nextInt(10);
-				if (guess == target && temp.getEmptySpace() != null && temp.getEmptySpace().getData().equals("hi")) { //guess is target and the node is an empty space
+				if (guess == target && temp.getEmptySpace() != null) { //guess is target and the node is an empty space
 					Obstacle obst = new Obstacle();//a new obstacle to place
 					grid[0][i].replace(count,new Node(obst,temp.getNext())); //replacing the element at temp with an obstacle
 				}
 				temp = temp.getNext(); //updating
 				count++;
-			}
-				
+			}	
 		}	
 	}
 	public void  generateObjective() {//place an objective in each corner
@@ -55,6 +53,8 @@ public class GridMap {
 		}
 	}
 	
+	//Display the string map
+	//Used only during demo, might be removed for full game
 	public void  displayMap() {
 		for(int i = 0; i < 8; i++){
 			System.out.println();
@@ -77,23 +77,26 @@ public class GridMap {
 		}
 	}
 	
+	//Moves the character to a another spot on the board
+	//If there is an obstacle, a character or an objective, do not move the character
 	public void moveChar(String direction, Character c){
-      int index=0;
-      int i=0;
+      int index = 0;
+      int i;
       
+      //Finds the character in the array of LinkedList
       for (i=0; i < 8; i++ ){
-         index=0;
+    	 index = 0;
          Node n = grid[0][i].getFront();
-         while (grid[0][i].getNode(index).getCharacter()!=c&&index<7){
+         while (grid[0][i].getNode(index).getCharacter() != c && index < 7){
             n = n.getNext();
             index++;
          } 
          if (index<7)
             break;     
       }      
-      
       boolean walk = false;
-   
+      
+      //Move the character in the specified direction
       if(grid[0][i].getNode(index).getCharacter()!=null){
          Node temp=null, temp2=null;
          EmptySpace e= new EmptySpace();
@@ -102,53 +105,58 @@ public class GridMap {
              temp = grid[0][i].getNode(index);
              if(!(index+1 > 7)){
                temp2= grid[0][i].getNode(index+1);
-               walk = true;
+               if(temp2.getEmptySpace() != null)
+            	   walk = true;
              }
          }        
          if (direction.equals("left")){
              temp = grid[0][i].getNode(index);
              if(!(index-1 < 0)) {
                temp2= grid[0][i].getNode(index-1);
-               walk = true;
+               if(temp2.getEmptySpace() != null)
+            	   walk = true;
              }
          } 
-         if (direction.equals("front")){
+         if (direction.equals("down")){
              temp = grid[0][i].getNode(index);
              if(!(i+1 > 7)){
                temp2= grid[0][i+1].getNode(index); 
-               walk = true;
+               if(temp2.getEmptySpace() != null)
+            	   walk = true;
              }
          }    
-         if (direction.equals("back")){
+         if (direction.equals("up")){
              temp = grid[0][i].getNode(index);
              if(!(i-1 < 0)){
                temp2= grid[0][i-1].getNode(index); 
-               walk = true;
+               if(temp2.getEmptySpace() != null)
+            	   walk = true;
              }
          }                       
-            
-         temp.setData(e);
-         Character ch = null;
-         EmptySpace emp = null;
-         temp.setData(ch);
-         temp2.setData(c);
-         temp2.setData(emp);
          if(walk == true){
+            temp.setData(e);
+            temp2.setData(c);
             turn++;
             walk = false;
          }
       }
-      
-   }             
+   }
+	//Get method for the grid LinkedList Double Array
+	public LinkedList[][] getGrid(){
+		return grid;
+	}
                    
 	public static void main (String[] args){
 		GridMap map = new GridMap();
-      Character c = new Character("Steve");
-		map.generateCharacter(c, new Character("Craig"), new Character("Sam"),"blue");
-		map.generateCharacter(new Character("Man"), new Character("Woman"), new Character("Child"),"red");
+		Character c = new Character("Steve","B");
+		map.generateCharacter(c, new Character("Craig","B"), new Character("Sam","B"),"blue");
+		map.generateCharacter(new Character("Man","R"), new Character("Woman","R"), new Character("Child","R"),"red");
 		map.generateObstacles();
 		map.generateObjective();
+		map.displayMap();
+		System.out.println();
         map.moveChar("right",c);
+        map.moveChar("down", c);
 		map.displayMap();
 	}
 	
