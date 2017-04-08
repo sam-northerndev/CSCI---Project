@@ -185,15 +185,12 @@ public class FullGame extends Application {
 					Character c = map[0][i].getNode(j-1).getCharacter();
 					g.moveChar("right", c);
 					//Move the character on the board
-					board[i][j-1].setText("");
-					board[i][j].setText("C");
+					board[i][j-1].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:blue;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(blue1));
 					}
 					else {
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:red;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(red1));
 					}
 					System.out.println("Move Right");
 					g.displayMap();
@@ -218,16 +215,13 @@ public class FullGame extends Application {
 					//Moves the character on the GridMap
 					Character c = map[0][i].getNode(j+1).getCharacter();
 					g.moveChar("left", c);
+					board[i][j+1].setGraphic(null);
 					//Move the character on the board
-					board[i][j+1].setText("");
-					board[i][j].setText("C");
 					if (c.getTeam().equals("B")){
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:blue;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(blue1));
 					}
 					else {
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:red;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(red1));
 					}
 					System.out.println("Move Left");
 					g.displayMap();
@@ -253,15 +247,12 @@ public class FullGame extends Application {
 					Character c = map[0][i+1].getNode(j).getCharacter();
 					g.moveChar("up", c);
 					//Move the character on the board
-					board[i+1][j].setText("");
-					board[i][j].setText("C");
+					board[i+1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:blue;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(blue1));
 					}
 					else {
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:red;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(red1));
 					}
 					System.out.println("Move Up");
 					g.displayMap();
@@ -287,15 +278,12 @@ public class FullGame extends Application {
 					Character c = map[0][i-1].getNode(j).getCharacter();
 					g.moveChar("down", c);
 					//Move the character on the board
-					board[i-1][j].setText("");
-					board[i][j].setText("C");
+					board[i-1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:blue;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(blue1));
 					}
 					else {
-						board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;"
-								+ "-fx-text-fill:red;-fx-font-size:35;");
+						board[i][j].setGraphic(new ImageView(red1));
 					}
 					System.out.println("Move Down");
 					g.displayMap();
