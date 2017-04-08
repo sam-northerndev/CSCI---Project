@@ -4,8 +4,10 @@
 public class Character {
    //type of character
    private int type;
-   //name of character
-	private String name;
+   //Team this character belongs to (Either R(red) or B(blue))
+   private String team;
+   //Name of the character
+   private String name;
    //level of character
 	private int level;
 	//hp is the hit points (Health) of the character)
@@ -36,13 +38,15 @@ public class Character {
 		alive = true;
 	}
 	
-	public Character(String n){
+	public Character(String n, String t){
 		name = n;
+		team = t;
+		type = 1;
 	}
 	
 	//Method that calculates the damage done to an enemy unit
 	//Takes into account the strength of the character
-	public double Attack(){
+	public double attack(){
 		//The damage done by the character can be calculated in a different way
       //ranger
       if(type == 0)
@@ -76,9 +80,9 @@ public class Character {
 	public void defend(Character r){
       //checks if attacking character is a mage or not
       if(r.getType() == 2)
-         hp = (int)(hp - (r.Attack()/resistance));
+         hp = (int)(hp - (r.attack()/resistance));
       else 
-		   hp = (int)(hp - (r.Attack()/defense));
+		   hp = (int)(hp - (r.attack()/defense));
 		if (hp <= 0){
 			alive = false;
 		}
@@ -96,5 +100,9 @@ public class Character {
 		return name;
 	}
 	
+	//Get team name 
+	public String getTeam(){
+		return team;
+	}
 	
 }
