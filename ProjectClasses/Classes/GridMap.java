@@ -4,7 +4,7 @@ import java.util.Random;
 public class GridMap {
   
 	private LinkedList[][] grid = new LinkedList[1][8];
-	private static int turn = 0;
+	//private static int turn = 0;
 	
 	public GridMap() { // Populating the grid with empty spaces
 		for(int i = 0; i < 8; i++) { // for loop for each row
@@ -136,7 +136,7 @@ public class GridMap {
          if(walk == true){
             temp.setData(e);
             temp2.setData(c);
-            turn++;
+            //turn++;
             walk = false;
          }
       }

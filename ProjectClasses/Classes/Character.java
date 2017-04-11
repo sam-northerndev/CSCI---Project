@@ -8,8 +8,6 @@ public class Character {
    private String team;
    //Name of the character
    private String name;
-   //level of character
-	private int level;
 	//hp is the hit points (Health) of the character)
 	private int hp;
 	//Strength is the physical damage done to a character
@@ -23,8 +21,6 @@ public class Character {
 	//physical defense
 	private int defense;
 	//XP that increases when the character attacks/kills an enemy
-	private int XP;
-	//This boolean might not be necessary
 	private boolean alive;
 	
 	//Constructor that sets alive as true
@@ -34,7 +30,6 @@ public class Character {
 		magic = mag;
 		resistance = res;
 		defense = def;
-		level = 1;
 		alive = true;
 	}
 	

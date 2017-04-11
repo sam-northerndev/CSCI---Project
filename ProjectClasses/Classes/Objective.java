@@ -5,7 +5,7 @@ public class Objective {
 	
 	public Objective(String color) {
 		team = color;
-		hp = 1000;
+		hp = 100;
 		
 	}
 	public boolean destroyed() { // if the objective is destroyed
@@ -26,6 +26,9 @@ public class Objective {
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	public String getTeam(){
+		return team;
 	}
 	public String toString() {
 		return team;
