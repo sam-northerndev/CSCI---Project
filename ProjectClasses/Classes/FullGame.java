@@ -25,6 +25,8 @@ public class FullGame extends Application {
 	private Image blue1,blue2,blue3,red1,red2,red3;
 	private Image tree,water,hole,rock;
 	private Image rTower,bTower;
+   private int turnCount;
+   private String team;
 	@Override public void start(Stage stage){
 		
 		//assigns the Image objects to their respective image
@@ -40,6 +42,9 @@ public class FullGame extends Application {
 		rock = new Image(new File("minerals_pure_silver-256.png").toURI().toString());
 		rTower = new Image(new File("castle_red.png").toURI().toString());
 		bTower = new Image(new File("castle_blue.png").toURI().toString());
+      
+      turnCount = 0;
+      team = "R";
 		
 		//Creates the board from GridMap
 		g = new GridMap();
@@ -57,7 +62,7 @@ public class FullGame extends Application {
 		stats.setPadding(new Insets(15,12,15,12));
 		stats.setPrefSize(150, 400);
 		stats.setStyle("-fx-background-color:red");
-			
+      	
 		title = new Text("Game Start!"); //creating a title and adding it to the vertical box.
 		title.setFont(Font.font("Arial", FontWeight.THIN, 16));
 		stats.getChildren().add(title);
@@ -149,7 +154,7 @@ public class FullGame extends Application {
 						name.setText(c.getName());
 						stats.getChildren().addAll(title,name);
 						//checks to see if the character is on the current player's team
-						if (c.getTeam().equals("B")||c.getTeam().equals("R")){
+						if (c.getTeam().equals(team)){
 							resetButtonAction();
 							//sets the Action of the button to move/attack with the character
 							if(j+1 < 8 && map[0][i].getNode(j+1).getEmptySpace() != null){
@@ -232,6 +237,8 @@ public class FullGame extends Application {
 				}
 			}
 		}
+      turnCount++;
+      checkTurn();
 	}
 	
 	//Process for character movement to the left
@@ -272,6 +279,8 @@ public class FullGame extends Application {
 				}
 			}
 		}
+      turnCount++;
+      checkTurn();
 	}
 	
 	//Process for character movement upward
@@ -312,6 +321,8 @@ public class FullGame extends Application {
 				}
 			}
 		}
+      turnCount++;
+      checkTurn();
 	}
 	
 	//Process for character movement downward
@@ -353,6 +364,8 @@ public class FullGame extends Application {
 				}
 			}
 		}
+      turnCount++;
+      checkTurn();
 	}
 	
 	//Method that sets all the button's actions back to processButtonPress
@@ -371,6 +384,25 @@ public class FullGame extends Application {
 			}
 		}
 	}
+   
+   public void checkTurn(){
+      if (team.equals("B")){
+         if (turnCount==2){
+            team="R";
+            turnCount=0;
+            stats.setStyle("-fx-background-color:red");
+            title.setText("Red Team Turn");
+         }   
+      }      
+      else if(team.equals("R")){
+         if (turnCount==2){
+            team="B"; 
+            turnCount=0;
+            stats.setStyle("-fx-background-color:blue");
+            title.setText("Blue Team Turn");
+         }   
+      }     
+   }  
 	
 	public static void main(String[] args){
 		Application.launch(args);
