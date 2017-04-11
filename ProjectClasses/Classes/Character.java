@@ -55,7 +55,6 @@ public class Character {
       //tank
       else
          return strength*1.7;
-      
 	}
    
    //sets type of character

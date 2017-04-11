@@ -80,7 +80,14 @@ public class FullGame extends Application {
 		for (int i = 0; i<8; i++){
 			for (int j = 0; j<8; j++){
 				board[i][j] = new Button();
-				board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;-fx-font-size:35");
+				if (map[0][i].getNode(j).getCharacter() != null){
+					if (map[0][i].getNode(j).getCharacter().getTeam().equals("B"))
+						board[i][j].setStyle("-fx-border-color: lightblue; -fx-background-color: green;");
+					else
+						board[i][j].setStyle("-fx-border-color: red; -fx-background-color: green;");
+				}
+				else
+					board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;");
 				board[i][j].setMinSize(80, 80);
 				board[i][j].setMaxSize(80, 80);
 				if (map[0][i].getNode(j).getObstacle() != null){
@@ -125,6 +132,7 @@ public class FullGame extends Application {
 		stage.show();
 
 	}
+	
 	//Button Press processing method
 	public void processButtonPress(ActionEvent event){
 		//Finds the button that was pressed
@@ -142,15 +150,24 @@ public class FullGame extends Application {
 						stats.getChildren().addAll(title,name);
 						//checks to see if the character is on the current player's team
 						if (c.getTeam().equals("B")||c.getTeam().equals("R")){
+							resetButtonAction();
 							//sets the Action of the button to move/attack with the character
-							if(j+1 < 8 && map[0][i].getNode(j+1).getEmptySpace() != null)
+							if(j+1 < 8 && map[0][i].getNode(j+1).getEmptySpace() != null){
 								board[i][j+1].setOnAction(this::processMoveCharRight);
-							if(j-1 >= 0 && map[0][i].getNode(j-1).getEmptySpace() != null)
+								board[i][j+1].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
+							}
+							if(j-1 >= 0 && map[0][i].getNode(j-1).getEmptySpace() != null){
 								board[i][j-1].setOnAction(this::processMoveCharLeft);
-							if(i-1 >= 0 && map[0][i-1].getNode(j).getEmptySpace() != null)
+								board[i][j-1].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
+							}
+							if(i-1 >= 0 && map[0][i-1].getNode(j).getEmptySpace() != null){
 								board[i-1][j].setOnAction(this::processMoveCharUp);
-							if(i+1 < 8 && map[0][i+1].getNode(j).getEmptySpace() != null)
+								board[i-1][j].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
+							}
+							if(i+1 < 8 && map[0][i+1].getNode(j).getEmptySpace() != null){
 								board[i+1][j].setOnAction(this::processMoveCharDown);
+								board[i+1][j].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
+							}
 						}
 					}
 					else if (location.getObstacle() != null){
@@ -190,19 +207,28 @@ public class FullGame extends Application {
 					board[i][j-1].setGraphic(null);
 					if (c.getTeam().equals("B")){
 						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
 						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					//System.out.println("Move Right");
 					//g.displayMap();
-					if (i-1 >=0 && j-1 >=0)
+					if (i-1 >=0 && j-1 >=0 && map[0][i-1].getNode(j-1).getCharacter() == null){
 						board[i-1][j-1].setOnAction(this::processButtonPress);
-					if (j-2 >=0)
+						board[i-1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (j-2 >=0 && map[0][i].getNode(j-2).getCharacter() == null){
 						board[i][j-2].setOnAction(this::processButtonPress);
-					if (i+1 < 8 && j-1 >= 0)
+						board[i][j-2].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i+1 < 8 && j-1 >= 0 && map[0][i+1].getNode(j-1).getCharacter() == null){
 						board[i+1][j-1].setOnAction(this::processButtonPress);
+						board[i+1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
 					board[i][j].setOnAction(this::processButtonPress);
+					board[i][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
 				}
 			}
 		}
@@ -221,19 +247,28 @@ public class FullGame extends Application {
 					//Move the character on the board
 					if (c.getTeam().equals("B")){
 						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
 						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					//System.out.println("Move Left");
 					//g.displayMap();
-					if(j+2 < 8)
+					if(j+2 < 8 && map[0][i].getNode(j+2).getCharacter() == null){
 						board[i][j+2].setOnAction(this::processButtonPress);
-					board[i][j].setOnAction(this::processButtonPress);
-					if (i + 1 < 8 && j + 1 < 8)
+						board[i][j+2].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i + 1 < 8 && j + 1 < 8 && map[0][i+1].getNode(j+1).getCharacter() == null){
 						board[i+1][j+1].setOnAction(this::processButtonPress);
-					if (i-1 >= 0 && j+1 < 8)
+						board[i+1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i-1 >= 0 && j+1 < 8 && map[0][i-1].getNode(j+1).getCharacter() == null){
 						board[i-1][j+1].setOnAction(this::processButtonPress);
+						board[i-1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					board[i][j].setOnAction(this::processButtonPress);
+					board[i][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
 				}
 			}
 		}
@@ -252,19 +287,28 @@ public class FullGame extends Application {
 					board[i+1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
 						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
 						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					//System.out.println("Move Up");
 					//g.displayMap();
-					if (i+1 < 8 && j+1 < 8)
+					if (i+1 < 8 && j+1 < 8 && map[0][i+1].getNode(j+1).getCharacter() == null){
 						board[i+1][j+1].setOnAction(this::processButtonPress);
-					if (i+1 < 8 && j-1 >= 0)
+						board[i+1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i+1 < 8 && j-1 >= 0 && map[0][i+1].getNode(j-1).getCharacter() == null){
 						board[i+1][j-1].setOnAction(this::processButtonPress);
-					board[i][j].setOnAction(this::processButtonPress);
-					if (i+2 > 8)
+						board[i+1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i+2 < 8 && map[0][i+2].getNode(j).getCharacter() == null){
 						board[i+2][j].setOnAction(this::processButtonPress);
+						board[i+2][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					board[i][j].setOnAction(this::processButtonPress);
+					board[i+1][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 				}
 			}
 		}
@@ -283,21 +327,47 @@ public class FullGame extends Application {
 					board[i-1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
 						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
 						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					//System.out.println("Move Down");
 					//g.displayMap();
 					//Resets the buttons (if There was a button in the first place
-					if (i-1 >= 0 && j+1 < 8)
+					if (i-1 >= 0 && j+1 < 8 && map[0][i-1].getNode(j+1).getCharacter() == null){
 						board[i-1][j+1].setOnAction(this::processButtonPress);
-					if (i-1 >=0 && j-1 >=0)
+						board[i-1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i-1 >=0 && j-1 >=0 && map[0][i-1].getNode(j-1).getCharacter() == null){
 						board[i-1][j-1].setOnAction(this::processButtonPress);
-					board[i][j].setOnAction(this::processButtonPress);
-					if (i-2 >= 0)
+						board[i-1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					if (i-2 >= 0 && map[0][i-2].getNode(j).getCharacter() == null){
 						board[i-2][j].setOnAction(this::processButtonPress);
+						board[i-2][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
+					}
+					board[i][j].setOnAction(this::processButtonPress);
+					board[i-1][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 				}
+			}
+		}
+	}
+	
+	//Method that sets all the button's actions back to processButtonPress
+	public void resetButtonAction(){
+		for(int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				board[i][j].setOnAction(this::processButtonPress);
+				if (map[0][i].getNode(j).getCharacter() != null){
+					if (map[0][i].getNode(j).getCharacter().getTeam().equals("B"))
+						board[i][j].setStyle("-fx-border-color: lightblue; -fx-background-color: green;");
+					else
+						board[i][j].setStyle("-fx-border-color: red; -fx-background-color: green;");
+				}
+				else
+					board[i][j].setStyle("-fx-border-color: black; -fx-background-color: green;");
 			}
 		}
 	}
