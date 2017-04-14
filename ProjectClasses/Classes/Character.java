@@ -98,5 +98,9 @@ public class Character {
 	public String getTeam(){
 		return team;
 	}
+   
+   public int getHp(){
+      return hp;
+   }
 	
 }
