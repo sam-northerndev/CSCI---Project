@@ -145,6 +145,22 @@ public class GridMap {
 	public LinkedList[][] getGrid(){
 		return grid;
 	}
+	public void removeChar(Character c) {//removes a character
+		for (int i = 0; i < 8; i++ ) {//calling each linked list element in grid.
+			Node temp = grid[0][i].getFront(); //starting at the front, then iterating through the list.
+			int count = 0; //keeps track where to remove char
+			while (temp != null) {
+				if (temp.getEmptySpace() == null && temp.getObstacle() == null && temp.getObjective() == null && temp.getCharacter().equals(c)) { 
+					EmptySpace emp = new EmptySpace(); 
+					temp.setData(emp);
+					
+				}
+				temp = temp.getNext(); //updating
+				count++;
+
+			}
+		}
+	}
                    
 	public static void main (String[] args){
 		GridMap map = new GridMap();
@@ -155,12 +171,14 @@ public class GridMap {
 		map.generateObjective();
 		map.displayMap();
 		System.out.println();
-        map.moveChar("right",c);
-        map.displayMap();
-        map.moveChar("down", c);
+		map.removeChar(c);
 		map.displayMap();
-		map.moveChar("up", c);
-		map.displayMap();
+		//System.out.print();        /*map.moveChar("right",c);
+       // map.displayMap();
+       // map.moveChar("down", c);
+		//map.displayMap();
+		//map.moveChar("up", c);
+		//map.displayMap();*/
 	}
 	
 
