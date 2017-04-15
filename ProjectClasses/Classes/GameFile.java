@@ -3,85 +3,48 @@ import java.util.StringTokenizer;
 
 public class GameFile {
 
-   File Characters = new File("Characters.txt");
+   File TeamOne = new File("TeamOne.txt");
+   File TeamTwo = new File("TeamTwo.txt");
    
    public GameFile()
    {
-      File Characters;
+      File TeamOne;
+      File TeamTwo;
    }
    
-   //save characters 
-   public void createCharacters(Character one, Character two, Character three)throws IOException{
-      FileWriter fwritter = new FileWriter(Characters, true);
-      PrintWriter outputFile = new PrintWriter(fwritter);
-         
-      //input stats
-      outputFile.println(one.getName() + " "  + one.getHp() + " " + one.getType());
-      outputFile.println(two.getName() + " " + two.getHp() + " " + two.getType());
-      outputFile.println(three.getName() + " " + three.getHp() + " " + three.getType());
-         
-      fwritter.close();
-      outputFile.close();
-     }
    
-   //save character hp
-   public void saveCharHp(Character c)throws IOException
+     //get name of character
+     //input team file and num of character you want to retrieve (1-3)
+   public String getCharName(File one, int num)throws IOException
    {
+      BufferedReader read = new BufferedReader(new FileReader(one));
       StringTokenizer token;
-      File tempFile = new File("temp.txt");
-         
-      BufferedReader reader = new BufferedReader(new FileReader("Characters.txt"));
-      BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-      
-      String currentLine, word;
-      
-      while((currentLine = reader.readLine()) != null) {
-               token = new StringTokenizer(currentLine, " ");
-               while(token.hasMoreTokens()) {
-                  word = token.nextToken();
-                  writer.write(word + " ");
-                  if(word.equals(c.getName())){
-                     writer.write(c.getHp() + " ");
-                     word = token.nextToken();
-                  }
-  
-               }
-               writer.newLine();
-        }
-        
-        writer.close(); 
-        reader.close(); 
-   }
-   
-   //get character hp
-   public int getCharHp(Character c)throws IOException
-   {
-      BufferedReader read = new BufferedReader(new FileReader("Characters.txt"));
-      StringTokenizer token;
-      String line, word, health;
-      int hp = 0;
+      String line, word;
+      String name = "";
+      int n = 0;
+      int numLine = 1;
 
         while((line = read.readLine()) != null) {
                token = new StringTokenizer(line, " ");
                while(token.hasMoreTokens()) {
-                  word = token.nextToken(); 
-                  if(word.equals(c.getName())){
-                     health = token.nextToken();
-                     hp = Integer.parseInt(health);
-                  }
+               word = token.nextToken();
+                  if(n == 0 && numLine == num)
+                     name = word;
+               n++;  
                   
                }
-                 
+            numLine++;
         }
        
         read.close(); 
-        return hp;
+        return name;
    }
    
    //get character type
-   public int getCharType(Character c)throws IOException
+   //input name and team file
+   public int getCharType(String name, File one)throws IOException
    {
-      BufferedReader read = new BufferedReader(new FileReader("Characters.txt"));
+      BufferedReader read = new BufferedReader(new FileReader(one));
       StringTokenizer token;
       String line, word, character;
       int type = 0;
@@ -90,8 +53,7 @@ public class GameFile {
                token = new StringTokenizer(line, " ");
                while(token.hasMoreTokens()) {
                   word = token.nextToken(); 
-                  if(word.equals(c.getName())){
-                     word = token.nextToken();
+                  if(word.equals(name)){
                      character = token.nextToken();
                      type = Integer.parseInt(character);
                   }
