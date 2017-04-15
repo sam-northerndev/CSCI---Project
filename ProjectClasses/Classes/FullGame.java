@@ -5,12 +5,17 @@ import java.io.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.text.*;
 import javafx.scene.image.*;
 
@@ -18,6 +23,8 @@ public class FullGame extends Application {
 	private Button[][] board;
 	private LinkedList[][] map;
 	private GridMap g;
+	private GridPane grid;
+	private BorderPane border;
 	private VBox stats;
 	private Text title;
 	private Text name;
@@ -25,8 +32,9 @@ public class FullGame extends Application {
 	private Image blue1,blue2,blue3,red1,red2,red3;
 	private Image tree,water,hole,rock;
 	private Image rTower,bTower;
-   private int turnCount;
-   private String team;
+	private static int count1 = 3,count2 = 3;
+	private int turnCount;
+	private String team;
 	@Override public void start(Stage stage){
 		
 		//assigns the Image objects to their respective image
@@ -55,7 +63,7 @@ public class FullGame extends Application {
 		map = g.getGrid();
 		
 		//Create the BorderPane
-		BorderPane border = new BorderPane();
+		border = new BorderPane();
 		
 		//Creates the Vertical Box for Character Status information
 		stats = new VBox(10);
@@ -77,7 +85,7 @@ public class FullGame extends Application {
 		
 		//Creates the GridPane
 		//Also sets the image of the obstacles if there is one
-		GridPane grid = new GridPane();
+		grid = new GridPane();
 		board = new Button[8][8];
 		grid.setHgap(0);
 		grid.setVgap(0);
@@ -159,41 +167,73 @@ public class FullGame extends Application {
 						if (c.getTeam().equals(team)){
 							resetButtonAction();
 							//sets the Action of the button to move/attack with the character
+							//Empty Space to Right
 							if(j+1 < 8 && map[0][i].getNode(j+1).getEmptySpace() != null){
 								board[i][j+1].setOnAction(this::processMoveCharRight);
 								board[i][j+1].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
 							}
+							//Character to Right
 							else if(j+1 < 8 && map[0][i].getNode(j+1).getCharacter() != null 
 									&& !map[0][i].getNode(j+1).getCharacter().getTeam().equals(c.getTeam())){
 								board[i][j+1].setOnAction(this::processAttackRight);
 								board[i][j+1].setStyle("-fx-border-color: Orange;-fx-background-color: green;");
 							}
+							//Objective to Right
+							else if(j+1 < 8 && map[0][i].getNode(j+1).getObjective() != null 
+									&& !map[0][i].getNode(j+1).getObjective().getTeam().equals(c.getTeam())){
+								board[i][j+1].setOnAction(this::processAttackTowerRight);
+								board[i][j+1].setStyle("-fx-border-color: Purple;-fx-background-color: green;");
+							}
+							//Empty Space to Left
 							if(j-1 >= 0 && map[0][i].getNode(j-1).getEmptySpace() != null){
 								board[i][j-1].setOnAction(this::processMoveCharLeft);
 								board[i][j-1].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
 							}
+							//Character to Left
 							else if(j-1 >= 0 && map[0][i].getNode(j-1).getCharacter() != null 
 									&& !map[0][i].getNode(j-1).getCharacter().getTeam().equals(c.getTeam())){
 								board[i][j-1].setOnAction(this::processAttackLeft);
 								board[i][j-1].setStyle("-fx-border-color: Orange;-fx-background-color: green;");
 							}
+							//Objective to left
+							else if(j-1 >= 0 && map[0][i].getNode(j-1).getObjective() != null 
+									&& !map[0][i].getNode(j-1).getObjective().getTeam().equals(c.getTeam())){
+								board[i][j-1].setOnAction(this::processAttackTowerLeft);
+								board[i][j-1].setStyle("-fx-border-color: Purple;-fx-background-color: green;");
+							}
+							//Empty Space up
 							if(i-1 >= 0 && map[0][i-1].getNode(j).getEmptySpace() != null){
 								board[i-1][j].setOnAction(this::processMoveCharUp);
 								board[i-1][j].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
 							}
+							//Character up
 							else if(i-1 >= 0 && map[0][i-1].getNode(j).getCharacter() != null 
 									&& !map[0][i-1].getNode(j).getCharacter().getTeam().equals(c.getTeam())){
 								board[i-1][j].setOnAction(this::processAttackUp);
 								board[i-1][j].setStyle("-fx-border-color: Orange;-fx-background-color: green;");
 							}
+							//Objective up
+							else if(i-1 >= 0 && map[0][i-1].getNode(j).getObjective() != null 
+									&& !map[0][i-1].getNode(j).getObjective().getTeam().equals(c.getTeam())){
+								board[i-1][j].setOnAction(this::processAttackTowerUp);
+								board[i-1][j].setStyle("-fx-border-color: Purple;-fx-background-color: green;");
+							}
+							//Empty Space Down
 							if(i+1 < 8 && map[0][i+1].getNode(j).getEmptySpace() != null){
 								board[i+1][j].setOnAction(this::processMoveCharDown);
 								board[i+1][j].setStyle("-fx-border-color: yellow;-fx-background-color: green;");
 							}
+							//Character Down
 							else if(i+1 < 8 && map[0][i+1].getNode(j).getCharacter() != null 
 									&& !map[0][i+1].getNode(j).getCharacter().getTeam().equals(c.getTeam())){
 								board[i+1][j].setOnAction(this::processAttackDown);
 								board[i+1][j].setStyle("-fx-border-color: Orange;-fx-background-color: green;");
+							}
+							//Objective Down
+							else if(i+1 < 8 && map[0][i+1].getNode(j).getObjective() != null 
+									&& !map[0][i+1].getNode(j).getObjective().getTeam().equals(c.getTeam())){
+								board[i+1][j].setOnAction(this::processAttackTowerDown);
+								board[i+1][j].setStyle("-fx-border-color: Purple;-fx-background-color: green;");
 							}
 						}
 					}
@@ -409,6 +449,16 @@ public class FullGame extends Application {
 								board[i][j].setGraphic(null);
 								board[i][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 								g.removeChar(enemy);
+								if(enemy.getTeam().equals("B")){
+									count1--;
+									if(count1 <= 0)
+										hasWon("R");
+								}
+								else{
+									count2--;
+									if (count2 <= 0)
+										hasWon("B");
+								}
 							}
 							
 							//Reset The buttons
@@ -455,6 +505,16 @@ public class FullGame extends Application {
 						board[i][j].setGraphic(null);
 						board[i][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 						g.removeChar(enemy);
+						if(enemy.getTeam().equals("B")){
+							count1--;
+							if(count1 <= 0)
+								hasWon("R");
+						}
+						else{
+							count2--;
+							if (count2 <= 0)
+								hasWon("B");
+						}
 					}
 					//Reset Button
 					resetButtonAction();
@@ -478,6 +538,16 @@ public class FullGame extends Application {
 						board[i][j].setGraphic(null);
 						board[i][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 						g.removeChar(enemy);
+						if(enemy.getTeam().equals("B")){
+							count1--;
+							if(count1 <= 0)
+								hasWon("R");
+						}
+						else{
+							count2--;
+							if (count2 <= 0)
+								hasWon("B");
+						}
 					}
 					//ResetButton
 					resetButtonAction();
@@ -501,6 +571,16 @@ public class FullGame extends Application {
 						board[i][j].setGraphic(null);
 						board[i][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
 						g.removeChar(enemy);
+						if(enemy.getTeam().equals("B")){
+							count1--;
+							if(count1 <= 0)
+								hasWon("R");
+						}
+						else{
+							count2--;
+							if (count2 <= 0)
+								hasWon("B");
+						}
 					}
 					//Reset Button
 					resetButtonAction();
@@ -509,6 +589,69 @@ public class FullGame extends Application {
 		}
 	    turnCount++;
 	    checkTurn();
+	}
+	//The next four methods attack the Objectives (Tower)
+	//Also checks to see if the tower is destroyed
+	//If so, that team has won and calls the hasWon method
+	public void processAttackTowerRight(ActionEvent event){
+		Objective o = map[0][7].getNode(7).getObjective();
+		o.attacked(map[0][7].getNode(6).getCharacter());
+		if (o.destroyed()){
+			map[0][7].getNode(7).setData(new EmptySpace());
+			board[7][7].setGraphic(null);
+			if (team.equals("B"))
+				hasWon("B");
+			else
+				hasWon("R");
+		}
+		resetButtonAction();
+		turnCount++;
+		checkTurn();
+	}
+	public void processAttackTowerLeft(ActionEvent event){
+		Objective o = map[0][0].getNode(0).getObjective();
+		o.attacked(map[0][0].getNode(1).getCharacter());
+		resetButtonAction();
+		turnCount++;
+		if (o.destroyed()){
+			map[0][0].getNode(0).setData(new EmptySpace());
+			board[0][0].setGraphic(null);
+			if (team.equals("B"))
+				hasWon("B");
+			else
+				hasWon("R");
+		}
+		checkTurn();
+	}
+	public void processAttackTowerUp(ActionEvent event){
+		Objective o = map[0][0].getNode(0).getObjective();
+		o.attacked(map[0][1].getNode(0).getCharacter());
+		if (o.destroyed()){
+			map[0][0].getNode(0).setData(new EmptySpace());
+			board[0][0].setGraphic(null);
+			if (team.equals("B"))
+				hasWon("B");
+			else
+				hasWon("R");
+		}
+		resetButtonAction();
+		turnCount++;
+		checkTurn();
+	}
+	public void processAttackTowerDown(ActionEvent event){
+		Objective o = map[0][7].getNode(7).getObjective();
+		o.attacked(map[0][6].getNode(7).getCharacter());
+		if (o.destroyed()){
+			map[0][7].getNode(7).setData(new EmptySpace());
+			board[7][7].setGraphic(null);
+			if (team.equals("B"))
+				hasWon("B");
+			else
+				hasWon("R");
+		}
+		resetButtonAction();
+		turnCount++;
+		checkTurn();
 	}
 	
 	//Method that sets all the button's actions back to processButtonPress
@@ -549,7 +692,44 @@ public class FullGame extends Application {
             stats.getChildren().add(title);
          }   
       }     
-   }  
+   } 
+   
+   public void hasWon(String team){
+	   VBox winner = new VBox();
+	   winner.setSpacing(10);
+	   Text message = new Text();
+	   message.setFont(Font.font("Arial", FontWeight.THIN, 30));
+	   message.setFill(Paint.valueOf("Gold"));
+	   if(team.equals("B")){
+		  message.setText("Congratulations Blue Team!\nYou Win!");
+		  winner.setStyle("-fx-background-color: Blue");
+	   }
+	   else{
+		   message.setText("Congratulations Red Team!\nYou Win!");
+		   winner.setStyle("-fx-background-color: Red");
+	   }
+	   message.setTextAlignment(TextAlignment.CENTER);
+	   Button b = new Button("Exit Game");
+	   b.setStyle("-fx-background-color: green;-fx-border-color: black;-fx-font-color: white");
+	   b.setOnAction(this::processEndGame);
+	   winner.getChildren().addAll(message,b);
+	   winner.setAlignment(Pos.CENTER);
+	   
+	   Scene winScene = new Scene(winner);
+	   
+	   Stage winStage = new Stage();
+	   winStage.setScene(winScene);
+	   winStage.setResizable(false);
+	   winStage.show();
+	   winStage.setOnCloseRequest(this::processEndGame);
+   }
+   
+   public void processEndGame(ActionEvent event){
+	   System.exit(0);
+   }
+   public void processEndGame(WindowEvent event){
+	   System.exit(0);
+   }
 	
 	public static void main(String[] args){
 		Application.launch(args);
