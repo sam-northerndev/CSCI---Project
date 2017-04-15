@@ -34,6 +34,7 @@ public class GameFile {
                   
                }
             numLine++;
+            n = 0;
         }
        
         read.close(); 
