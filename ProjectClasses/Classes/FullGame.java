@@ -89,7 +89,7 @@ public class FullGame extends Application {
 		board = new Button[8][8];
 		grid.setHgap(0);
 		grid.setVgap(0);
-		grid.setStyle("-fx-background-color:blue");
+		grid.setStyle("-fx-background-color:red");
 		for (int i = 0; i<8; i++){
 			for (int j = 0; j<8; j++){
 				board[i][j] = new Button();
@@ -114,6 +114,9 @@ public class FullGame extends Application {
 					else
 						board[i][j].setGraphic(new ImageView(rock));
 				}
+				else if(map[0][i].getNode(j).getCharacter() != null){
+					board[i][j].setGraphic(new ImageView(map[0][i].getNode(j).getCharacter().getImage()));
+				}
 					
 				board[i][j].setOnAction(this::processButtonPress);
 				grid.add(board[i][j],j,i);
@@ -127,12 +130,6 @@ public class FullGame extends Application {
 		
 		//Sets the characters to their Starting Position on the board GUI (Alpha - using Color coded letters to display character)
 		//(will replace with pictures of characters when available)
-		board[1][0].setGraphic(new ImageView(blue1));
-		board[1][1].setGraphic(new ImageView(blue2));
-		board[0][1].setGraphic(new ImageView(blue3));
-		board[6][7].setGraphic(new ImageView(red1));
-		board[6][6].setGraphic(new ImageView(red2));
-		board[7][6].setGraphic(new ImageView(red3));
 		
 		//Sets the grid to the center
 		border.setCenter(grid);
@@ -158,7 +155,7 @@ public class FullGame extends Application {
 						//Display characters stats
 						Character c = location.getCharacter();
 						stats.getChildren().clear();
-						title.setText("Charcter");
+						title.setText("Character");
 						name.setText(c.getName());
 						hp.setText("HP: "+c.getHp());
 						
@@ -273,11 +270,11 @@ public class FullGame extends Application {
 					//Move the character on the board
 					board[i][j-1].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
-						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
@@ -316,11 +313,11 @@ public class FullGame extends Application {
 					board[i][j+1].setGraphic(null);
 					//Move the character on the board
 					if (c.getTeam().equals("B")){
-						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
-						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
@@ -358,11 +355,11 @@ public class FullGame extends Application {
 					//Move the character on the board
 					board[i+1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
-						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
@@ -400,11 +397,11 @@ public class FullGame extends Application {
 					//Move the character on the board
 					board[i-1][j].setGraphic(null);
 					if (c.getTeam().equals("B")){
-						board[i][j].setGraphic(new ImageView(blue1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
 					}
 					else {
-						board[i][j].setGraphic(new ImageView(red1));
+						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					//Resets the buttons (if There was a button in the first place)
@@ -678,6 +675,7 @@ public class FullGame extends Application {
             turnCount=0;
             stats.getChildren().clear();
             stats.setStyle("-fx-background-color:red");
+            grid.setStyle("-fx-background-color:red");
             title.setText("Red Team Turn");
             stats.getChildren().add(title);
          }   
@@ -688,6 +686,7 @@ public class FullGame extends Application {
             turnCount=0;
             stats.getChildren().clear();
             stats.setStyle("-fx-background-color:blue");
+            grid.setStyle("-fx-background-color:blue");
             title.setText("Blue Team Turn");
             stats.getChildren().add(title);
          }   
@@ -710,7 +709,8 @@ public class FullGame extends Application {
 	   }
 	   message.setTextAlignment(TextAlignment.CENTER);
 	   Button b = new Button("Exit Game");
-	   b.setStyle("-fx-background-color: green;-fx-border-color: black;-fx-font-color: white");
+	   b.setStyle("-fx-background-color: green;-fx-border-color: black");
+	   b.setTextFill(Paint.valueOf("White"));
 	   b.setOnAction(this::processEndGame);
 	   winner.getChildren().addAll(message,b);
 	   winner.setAlignment(Pos.CENTER);

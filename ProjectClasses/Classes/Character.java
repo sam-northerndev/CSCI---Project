@@ -1,6 +1,8 @@
 /* This Class Contains the attributes and the methods of a Character class
  * Started March 25, 2017
  */
+import javafx.scene.image.*;
+import java.io.*;
 public class Character {
    //type of character
    private int type;
@@ -9,11 +11,13 @@ public class Character {
    //Name of the character
    private String name;
 	//hp is the hit points (Health) of the character)
-	private int hp;
+   private int hp;
 	//Strength is the physical damage done to a character
-	private int strength;
+   private int strength;
    //Dexterity
    private int dexterity;
+   //Image of character
+   private Image charImage;
 	//Magic is the magic damage done to a character
 	private int magic;
 	//resistance is the magic defense
@@ -103,6 +107,12 @@ public class Character {
    
    public int getHp(){
       return hp;
+   }
+   public void setImage(Image image){
+	   charImage = image;
+   }
+   public Image getImage(){
+	   return charImage;
    }
 	
 }
