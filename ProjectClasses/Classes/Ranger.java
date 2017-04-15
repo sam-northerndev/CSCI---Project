@@ -5,9 +5,9 @@
  */
 public class Ranger extends Character {
 
-	public Ranger(){
-		super (20,2,4,3,1,2);
-      setType(0);
+	public Ranger(String name,String team){
+		super (name, team, 20,2,4,3,1,2);
+		setType(0);
 	}
   
 }

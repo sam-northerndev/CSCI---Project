@@ -3,9 +3,9 @@
  * Started March 25, 2017
  */
 public class Tank extends Character{
-	public Tank(){
-		super (30,3,1,1,1,4);
-      setType(3);
+	public Tank(String name, String team){
+		super (name,team,30,3,1,1,1,4);
+		setType(3);
 	}
 
 }

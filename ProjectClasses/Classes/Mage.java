@@ -4,9 +4,9 @@
  * Started March 25, 2017
  */
 public class Mage extends Character {
-	public Mage(){
-		super (15,1,1,4,5,2);
-      setType(2);
+	public Mage(String name,String team){
+		super (name,team,15,1,1,4,5,2);
+		setType(2);
 	}
 
 }

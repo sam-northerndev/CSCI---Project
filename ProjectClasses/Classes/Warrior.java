@@ -3,9 +3,9 @@
  * Started March 25, 2017
  */
 public class Warrior extends Character {
-	public Warrior(){
-		super(25,4,1,1,2,3);
-      setType(1);
+	public Warrior(String name, String team){
+		super(name,team,25,4,1,1,2,3);
+		setType(1);
 	}
 
 }

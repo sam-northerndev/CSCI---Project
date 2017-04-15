@@ -24,7 +24,9 @@ public class Character {
 	private boolean alive;
 	
 	//Constructor that sets alive as true
-	public Character(int hp, int str, int dex, int mag, int res, int def){
+	public Character(String n, String t,int hp, int str, int dex, int mag, int res, int def){
+		name = n;
+		team = t;
 		this.hp = hp;
 		strength = str;
 		magic = mag;
