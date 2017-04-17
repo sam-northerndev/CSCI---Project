@@ -35,8 +35,8 @@ public class GridMap {
 		}	
 	}
 	public void  generateObjective() {//place an objective in each corner
-		grid[0][0].replace(0, new Node(new Objective("blue"), grid[0][0].getFront().getNext()));//place blue teams objective in top left
-		grid[0][7].replace(7, new Node(new Objective("red"), grid[0][7].getNode(7).getNext()));//place red teams objective in bottom right
+		grid[0][0].replace(0, new Node(new Objective("B"), grid[0][0].getFront().getNext()));//place blue teams objective in top left
+		grid[0][7].replace(7, new Node(new Objective("R"), grid[0][7].getNode(7).getNext()));//place red teams objective in bottom right
 		
 	}
 	
@@ -148,7 +148,6 @@ public class GridMap {
 	public void removeChar(Character c) {//removes a character
 		for (int i = 0; i < 8; i++ ) {//calling each linked list element in grid.
 			Node temp = grid[0][i].getFront(); //starting at the front, then iterating through the list.
-			int count = 0; //keeps track where to remove char
 			while (temp != null) {
 				if (temp.getEmptySpace() == null && temp.getObstacle() == null && temp.getObjective() == null && temp.getCharacter().equals(c)) { 
 					EmptySpace emp = new EmptySpace(); 
@@ -156,30 +155,8 @@ public class GridMap {
 					
 				}
 				temp = temp.getNext(); //updating
-				count++;
 
 			}
 		}
 	}
-                   
-	public static void main (String[] args){
-		GridMap map = new GridMap();
-		Character c = new Character("Steve","B");
-		map.generateCharacter(c, new Character("Craig","B"), new Character("Sam","B"),"blue");
-		map.generateCharacter(new Character("Man","R"), new Character("Woman","R"), new Character("Child","R"),"red");
-		map.generateObstacles();
-		map.generateObjective();
-		map.displayMap();
-		System.out.println();
-		map.removeChar(c);
-		map.displayMap();
-		//System.out.print();        /*map.moveChar("right",c);
-       // map.displayMap();
-       // map.moveChar("down", c);
-		//map.displayMap();
-		//map.moveChar("up", c);
-		//map.displayMap();*/
-	}
-	
-
 }
