@@ -19,9 +19,40 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
 
 
 public class StartMenu extends Application {
+	private Button endButton;
+	private Button startButton;
+	private Text team1;
+	private Text team2;
+	
+	//Hbox's
+	private HBox charButtons;
+	private HBox nameField;
+	private HBox loadField;
+	
+	//textFields
+	private TextField nameInput;
+	private TextField loadInput;
+	private String currentName;
+	private String currentFile;
+	
+	//character buttons
+	private Button warriorButton;
+	private Button rangerButton;
+	private Button mageButton;
+	private Button tankButton;
+	private Button loadButton;
+	
+	//character Arrays
+	private Character[] newTeam1 = new Character[3];
+	private Character[] newTeam2 = new Character[3];
+	private static int team1Count = 0;
+	private static int team2Count = 0;
+	
+	
 	@Override public void start(Stage stage) {
 		//Making with padding of 30
 		GridPane pane = new GridPane();
@@ -33,10 +64,10 @@ public class StartMenu extends Application {
 
 		
 		//menu items
-		Button startButton = new Button("Start The Game");
+		startButton = new Button("Start The Game");
 		int buttonSize = 50;
 		startButton.setStyle(String.format("-fx-font-size: %dpx;", (int)(0.45 * buttonSize)));
-		Button endButton = new Button("Quit The Game");
+		endButton = new Button("Quit The Game");
 		endButton.setStyle(String.format("-fx-font-size: %dpx;", (int)(0.45 * buttonSize)));
 
 		//startButton.setPadding(new Insets(30,30,30,30));
@@ -44,9 +75,12 @@ public class StartMenu extends Application {
 		//text
 		Text menuTitle = new Text("Welcome to Hero Battles");
 		menuTitle.setFont(gameFont);
-		Text team1 = new Text("Player one, choose your Heros:");
-		Text team2 = new Text("Player two, choose your Heros:");
+		team1 = new Text("Player one, choose your Heros:");
+	    team2 = new Text("Player two, choose your Heros:");
+		
+		//setting team selection visibilty to false
 		team2.setVisible(false);
+		team1.setVisible(false);
 		
 		team1.setFont(playerFont);
 		team2.setFont(playerFont);
@@ -86,13 +120,17 @@ public class StartMenu extends Application {
 		
 		
 		//character selection items
-		Button loadButton = new Button("Load");
-		Button warriorButton = new Button("Warrior");
-		Button rangerButton = new Button("Ranger");
-		Button tankButton = new Button("Tank");
-		Button mageButton = new Button("Mage");
-		HBox charButtons = new HBox();
+		loadButton = new Button("Load");
+		warriorButton = new Button("Warrior");
+		rangerButton = new Button("Ranger");
+		tankButton = new Button("Tank");
+		mageButton = new Button("Mage");
+		charButtons = new HBox();
 		
+		//setting character selection button visibility to false
+		charButtons.setVisible(false);
+		
+		//formatting buttons
 		loadButton.setStyle(String.format("-fx-font-size: %dpx;", (int)(0.45 * 30)));
 		warriorButton.setStyle(String.format("-fx-font-size: %dpx;", (int)(0.45 * 30)));
 		rangerButton.setStyle(String.format("-fx-font-size: %dpx;", (int)(0.45 * 30)));
@@ -110,16 +148,42 @@ public class StartMenu extends Application {
 		charButtons.setAlignment(Pos.CENTER);
 		
 
-		//user Enters name
+		//user Load text file of character into the game -----------------------
+		Label loadLabel = new Label("Load File Name:");
+		
+		//styling character naming/loading.
+		loadLabel.setTextFill(Paint.valueOf("#ffffff"));
+		loadLabel.setFont(playerFont);
+		
+		loadInput = new TextField();
+		loadField = new HBox();
+		loadField.setPadding(new Insets(20, 20, 20, 20));
+		loadField.getChildren().addAll(loadLabel, loadInput);
+		pane.add(loadField, 0, 5);
+
+		//name text field start here------------------------
 		Label nameLabel = new Label("Name:");
-		TextField nameInput = new TextField();
-		HBox nameField = new HBox();
+		
+		//styling character naming/loading.
+		nameLabel.setTextFill(Paint.valueOf("#ffffff"));
+		nameLabel.setFont(playerFont);
+		
+		nameInput = new TextField();
+		nameField = new HBox();
 		nameField.setPadding(new Insets(20, 20, 20, 20));
 		nameField.getChildren().addAll(nameLabel, nameInput);
 		pane.add(nameField, 0, 5);
+								//----------------------
 		
+		//setting name text field visibilty to false and load field
+		nameField.setVisible(false);
+		loadField.setVisible(false);
+	
+		//centering both text fields
 		GridPane.setColumnSpan(nameField, 4);
 		nameField.setAlignment(Pos.CENTER);
+		GridPane.setColumnSpan(loadField, 4);
+		loadField.setAlignment(Pos.CENTER);
 		
 		//creating image for the background
 		Image image = new Image(new File("GameBackground.jpg").toURI().toString());
@@ -141,11 +205,195 @@ public class StartMenu extends Application {
 		stage.show();
 		
 		
+		
+		
+		
+		///////////////////////////////////////////////// Button presses
+		//Quit button
+		endButton.setOnAction(this::processButtonPress);
+		startButton.setOnAction(this::processButtonPress);
+		warriorButton.setOnAction(this::processButtonPress);
+		rangerButton.setOnAction(this::processButtonPress);
+		mageButton.setOnAction(this::processButtonPress);
+		tankButton.setOnAction(this::processButtonPress);
+		nameInput.setOnAction(this::processReturn);
+		loadButton.setOnAction(this::processButtonPress);
+		loadInput.setOnAction(event -> {
+			try {
+				processReturn1(event);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+		
+
+		
+		
+		
+		
+		
 	}
+		//////////////////////////////////// Button actions
+		public void processButtonPress(ActionEvent event) {
+			if (event.getSource() == endButton) { //End the game
+				System.exit(0);
+			}
+			else if (event.getSource() == startButton) { 
+				startButton.setVisible(false);//set start and quit buttons visible:false
+				endButton.setVisible(false);
+				team1.setVisible(true);
+				charButtons.setVisible(true);
+
+			}
+			else if (event.getSource() == loadButton){
+				nameField.setVisible(false);
+				if (team1Count == 0) {
+					loadField.setVisible(true);
+				}
+				else if (team2Count == 0) {
+					loadField.setVisible(true);
+				}
+			}
+			else if (event.getSource() == warriorButton) {
+				loadField.setVisible(false);
+				if (team1Count < 3) {
+					nameField.setVisible(true);
+					Warrior w = new Warrior (currentName, "B");
+					newTeam1[team1Count] = w;
+				}
+				else if (team2Count < 3) {
+					nameField.setVisible(true);
+					Warrior w = new Warrior (currentName, "R");
+					newTeam2[team2Count] = w;
+				}
+				warriorButton.setOnAction(this::processButtonPress);
+			}
+			else if (event.getSource() == mageButton) {
+				loadField.setVisible(false);
+				if (team1Count < 3) {
+					nameField.setVisible(true);
+					Mage m = new Mage (currentName, "B");
+					newTeam1[team1Count] = m;
+				}
+				else if (team2Count < 3) {
+					nameField.setVisible(true);
+					Mage m = new Mage (currentName, "R");
+					newTeam2[team2Count] = m;
+				}
+				mageButton.setOnAction(this::processButtonPress);
+			}
+			else if (event.getSource() == rangerButton) {
+				loadField.setVisible(false);
+				if (team1Count < 3) {
+					nameField.setVisible(true);
+					Ranger r = new Ranger (currentName, "B");
+					newTeam1[team1Count] = r;
+				}
+				else if (team2Count < 3) {
+					nameField.setVisible(true);
+					Ranger r = new Ranger (currentName, "R");
+					newTeam2[team2Count] = r;
+				}
+				rangerButton.setOnAction(this::processButtonPress);
+			}
+			else if (event.getSource() == tankButton) {
+				loadField.setVisible(false);
+				if (team1Count < 3) {
+					nameField.setVisible(true);
+					Tank t = new Tank (currentName, "B");
+					newTeam1[team1Count] = t;
+				}
+				else if (team2Count < 3) {
+					nameField.setVisible(true);
+					Tank t = new Tank (currentName, "R");
+					newTeam2[team2Count] = t;
+				}
+				tankButton.setOnAction(this::processButtonPress);
+			}
+
+
+		}
+		public void processReturn(ActionEvent event) {
+			if(event.getSource() == nameInput) {
+					currentName = nameInput.getText();
+					if (team1Count < 3) {
+						newTeam1[team1Count].setName(currentName);
+						team1Count++;
+					}
+					else if (team2Count < 3){
+						newTeam2[team2Count].setName(currentName);
+						team2Count++;
+					}
+			}
+			if (team1Count == 3) {
+				team1.setVisible(false);
+				team2.setVisible(true);
+				
+			}
+			nameInput.clear();
+			nameInput.setOnAction(this::processReturn);
+			nameField.setVisible(false);
+		}
+		public void processReturn1(ActionEvent event) throws IOException {
+			if (event.getSource() == loadInput) {
+				currentFile = loadInput.getText();
+				GameFile load;
+				if(team1Count == 0) {
+					load = new GameFile(currentFile);
+					for(int i =1; i < 4; i++) {
+						String name = load.getCharName(i);
+						int type = load.getCharType(name);
+						newTeam1[i-1] = generateCharacter(name,type,"B");
+						team1Count++;
+						System.out.print(newTeam1[i-1].getName() + newTeam1[i-1].getType() );
+					}
+				}
+				else if(team2Count == 0) {
+					load = new GameFile(currentFile);
+					for(int i = 1; i < 4; i++) {
+						String name = load.getCharName(i);
+						int type = load.getCharType(name);
+						newTeam2[i - 1] = generateCharacter(name,type,"R");
+						team2Count++;
+						System.out.print(newTeam2[i-1].getName() + newTeam2[i-1].getType() );
+					}
+				}
+			}
+			loadInput.clear();
+			loadField.setVisible(false);
+
+			team1.setVisible(false);
+			team2.setVisible(true);
+		}
+		
+		public static Character generateCharacter(String name, int type, String team) {
+			Character c = null;
+			if (type == 1) {
+				Warrior w = new Warrior (name, team);
+				return w;
+			}
+			if (type == 2) {
+				Mage m = new Mage (name, team);
+				return m;
+			}
+			if (type == 3) {
+				Tank t = new Tank (name, team);
+				return t;
+			}
+			if (type == 0) {
+				Ranger r = new Ranger (name, team);
+				return r;
+			}
+			return c;
+			
+			
+		}
+
+		
+		
 	
 	public static void main(String[] args){
 		launch(args);
 	}
-	
-
 }
