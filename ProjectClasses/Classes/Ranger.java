@@ -8,13 +8,16 @@ import javafx.scene.image.Image;
 public class Ranger extends Character {
 
 	public Ranger(String name,String team){
-		super (name, team, 20,2,4,3,1,2);
+		super (name, team, 20,2,1,3,2);
 		setType(0);
 		if(team.equals("B")){
 			setImage(new Image(new File("bluerogue.png").toURI().toString()));
 		}
 		else
 			setImage(new Image(new File("redrogue.png").toURI().toString()));
+	}
+	public String toString(){
+		return "Ranger";
 	}
   
 }

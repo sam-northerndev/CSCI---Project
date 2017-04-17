@@ -7,13 +7,16 @@ import javafx.scene.image.*;
 import java.io.*;
 public class Mage extends Character {
 	public Mage(String name,String team){
-		super (name,team,15,1,1,4,5,2);
+		super (name,team,20,0,4,3,1);
 		setType(2);
 		if(team.equals("B")){
 			setImage(new Image(new File("bluemage.png").toURI().toString()));
 		}
 		else
 			setImage(new Image(new File("redmage.png").toURI().toString()));
+	}
+	public String toString(){
+		return "Mage";
 	}
 
 }

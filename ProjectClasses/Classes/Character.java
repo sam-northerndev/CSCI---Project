@@ -2,7 +2,6 @@
  * Started March 25, 2017
  */
 import javafx.scene.image.*;
-import java.io.*;
 public class Character {
    //type of character
    private int type;
@@ -14,8 +13,6 @@ public class Character {
    private int hp;
 	//Strength is the physical damage done to a character
    private int strength;
-   //Dexterity
-   private int dexterity;
    //Image of character
    private Image charImage;
 	//Magic is the magic damage done to a character
@@ -28,7 +25,7 @@ public class Character {
 	private boolean alive;
 	
 	//Constructor that sets alive as true
-	public Character(String n, String t,int hp, int str, int dex, int mag, int res, int def){
+	public Character(String n, String t,int hp, int str,int mag, int res, int def){
 		name = n;
 		team = t;
 		this.hp = hp;
@@ -51,16 +48,22 @@ public class Character {
 		//The damage done by the character can be calculated in a different way
       //ranger
       if(type == 0)
-		   return dexterity*1.2;
+    	  if((int)(Math.random()*10) == 1)
+    		  return strength*3;
+    	  else
+    		  return strength*1.5;
       //warrior
       else if (type == 1)
-         return strength*2;
+    	  if((int)(Math.random()*20) == 1)
+    		  return strength*2;
+    	  else
+    		  return strength;
       //mage
       else if (type == 2)
          return magic*2;
       //tank
       else
-         return strength*1.7;
+         return strength;
 	}
    
    //sets type of character
@@ -79,11 +82,16 @@ public class Character {
 	//also checks if the character is dead (i.e if hp is less than or equal to 0)
 	public void defend(Character r){
       //checks if attacking character is a mage or not
-      if(r.getType() == 2)
-         hp = (int)(hp - (r.attack()/resistance));
+      if(r.getType() == 2){
+    	  if(getType() == 3)
+    		  hp = (int)(hp - (r.attack()*2/resistance));
+    	  else
+    		  hp = (int)(hp - (r.attack()/resistance));
+      }
       else 
 		   hp = (int)(hp - (r.attack()/defense));
 		if (hp <= 0){
+			hp = 0;
 			alive = false;
 		}
 	}
@@ -113,6 +121,20 @@ public class Character {
    }
    public Image getImage(){
 	   return charImage;
+   }
+
+   public int getStrength(){
+	   return strength;
+   }
+   
+   public int getMagic(){
+	   return magic;
+   }
+   public int getResistance(){
+	   return resistance;
+   }
+   public int getDefense(){
+	   return defense;
    }
 	
 }

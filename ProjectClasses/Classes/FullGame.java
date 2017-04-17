@@ -5,10 +5,8 @@ import java.io.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
 import javafx.scene.Scene;
@@ -29,7 +27,6 @@ public class FullGame extends Application {
 	private Text title;
 	private Text name;
 	private Text hp;
-	private Image blue1,blue2,blue3,red1,red2,red3;
 	private Image tree,water,hole,rock;
 	private Image rTower,bTower;
 	private static int count1 = 3,count2 = 3;
@@ -38,12 +35,6 @@ public class FullGame extends Application {
 	@Override public void start(Stage stage){
 		
 		//assigns the Image objects to their respective image
-		blue1 = new Image(new File("stick figure - grey.png").toURI().toString());
-		blue2 = new Image(new File("stick figure - grey.png").toURI().toString());
-		blue3 = new Image(new File("stick figure - grey.png").toURI().toString());
-		red1 = new Image(new File("stick-person-red.png").toURI().toString());
-		red2 = new Image(new File("stick-person-red.png").toURI().toString());
-		red3 = new Image(new File("stick-person-red.png").toURI().toString());
 		tree = new Image(new File("tree-icon.png").toURI().toString());
 		water = new Image(new File("water.png").toURI().toString());
 		hole = new Image(new File("hole.png").toURI().toString());
@@ -58,8 +49,8 @@ public class FullGame extends Application {
 		g = new GridMap();
 		g.generateObjective();
 		g.generateObstacles();
-		g.generateCharacter(new Ranger("Bob","B"), new Tank("Craig","B"), new Warrior("Sam","B"),"blue");
-		g.generateCharacter(new Mage("Man","R"), new Warrior("Woman","R"), new Warrior("Child","R"),"red");
+		g.generateCharacter(new Mage("Bob","B"), new Ranger("Craig","B"), new Warrior("Sam","B"),"blue");
+		g.generateCharacter(new Mage("Man","R"), new Ranger("Woman","R"), new Warrior("Child","R"),"red");
 		map = g.getGrid();
 		
 		//Create the BorderPane
@@ -74,11 +65,9 @@ public class FullGame extends Application {
 		title = new Text("Game Start!"); //creating a title and adding it to the vertical box.
 		title.setFont(Font.font("Arial", FontWeight.THIN, 16));
 		stats.getChildren().add(title);
-		//stats.getChildren().add(title);
 		//Creates the name Text object (used later to print name of the characters
 		name = new Text();
 		hp = new Text();
-		//stats.getChildren().add(name);
 		
 		//Sets the Left border to the status box
 		border.setLeft(stats);
@@ -128,9 +117,6 @@ public class FullGame extends Application {
 		board[0][0].setGraphic(new ImageView(bTower));
 		board[7][7].setGraphic(new ImageView(rTower));
 		
-		//Sets the characters to their Starting Position on the board GUI (Alpha - using Color coded letters to display character)
-		//(will replace with pictures of characters when available)
-		
 		//Sets the grid to the center
 		border.setCenter(grid);
 		
@@ -156,10 +142,14 @@ public class FullGame extends Application {
 						Character c = location.getCharacter();
 						stats.getChildren().clear();
 						title.setText("Character");
-						name.setText(c.getName());
+						name.setText(c.toString()+" "+c.getName());
 						hp.setText("HP: "+c.getHp());
+						Text str = new Text("Strength: "+c.getStrength());
+						Text mag = new Text("Magic: "+c.getMagic());
+						Text def = new Text("Defence: "+c.getDefense());
+						Text res = new Text("Resistance: "+c.getResistance());
 						
-						stats.getChildren().addAll(title,name,hp);
+						stats.getChildren().addAll(title,name,hp,str,mag,def,res);
 						//checks to see if the character is on the current player's team
 						if (c.getTeam().equals(team)){
 							resetButtonAction();
@@ -278,22 +268,6 @@ public class FullGame extends Application {
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
-					/*
-					if (i-1 >=0 && j-1 >=0 && map[0][i-1].getNode(j-1).getCharacter() == null){
-						board[i-1][j-1].setOnAction(this::processButtonPress);
-						board[i-1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (j-2 >=0 && map[0][i].getNode(j-2).getCharacter() == null){
-						board[i][j-2].setOnAction(this::processButtonPress);
-						board[i][j-2].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i+1 < 8 && j-1 >= 0 && map[0][i+1].getNode(j-1).getCharacter() == null){
-						board[i+1][j-1].setOnAction(this::processButtonPress);
-						board[i+1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					board[i][j].setOnAction(this::processButtonPress);
-					board[i][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					*/
 				}
 			}
 		}
@@ -321,21 +295,6 @@ public class FullGame extends Application {
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
-					/*if(j+2 < 8 && map[0][i].getNode(j+2).getCharacter() == null){
-						board[i][j+2].setOnAction(this::processButtonPress);
-						board[i][j+2].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i + 1 < 8 && j + 1 < 8 && map[0][i+1].getNode(j+1).getCharacter() == null){
-						board[i+1][j+1].setOnAction(this::processButtonPress);
-						board[i+1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i-1 >= 0 && j+1 < 8 && map[0][i-1].getNode(j+1).getCharacter() == null){
-						board[i-1][j+1].setOnAction(this::processButtonPress);
-						board[i-1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					board[i][j].setOnAction(this::processButtonPress);
-					board[i][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					*/
 				}
 			}
 		}
@@ -363,21 +322,6 @@ public class FullGame extends Application {
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
 					resetButtonAction();
-					/*if (i+1 < 8 && j+1 < 8 && map[0][i+1].getNode(j+1).getCharacter() == null){
-						board[i+1][j+1].setOnAction(this::processButtonPress);
-						board[i+1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i+1 < 8 && j-1 >= 0 && map[0][i+1].getNode(j-1).getCharacter() == null){
-						board[i+1][j-1].setOnAction(this::processButtonPress);
-						board[i+1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i+2 < 8 && map[0][i+2].getNode(j).getCharacter() == null){
-						board[i+2][j].setOnAction(this::processButtonPress);
-						board[i+2][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					board[i][j].setOnAction(this::processButtonPress);
-					board[i+1][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					*/
 				}
 			}
 		}
@@ -404,24 +348,8 @@ public class FullGame extends Application {
 						board[i][j].setGraphic(new ImageView(c.getImage()));
 						board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
 					}
-					//Resets the buttons (if There was a button in the first place)
+					//Resets the buttons
 					resetButtonAction();
-					/*
-					if (i-1 >= 0 && j+1 < 8 && map[0][i-1].getNode(j+1).getCharacter() == null){
-						board[i-1][j+1].setOnAction(this::processButtonPress);
-						board[i-1][j+1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i-1 >=0 && j-1 >=0 && map[0][i-1].getNode(j-1).getCharacter() == null){
-						board[i-1][j-1].setOnAction(this::processButtonPress);
-						board[i-1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					if (i-2 >= 0 && map[0][i-2].getNode(j).getCharacter() == null){
-						board[i-2][j].setOnAction(this::processButtonPress);
-						board[i-2][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					}
-					board[i][j].setOnAction(this::processButtonPress);
-					board[i-1][j].setStyle("-fx-border-color: black;-fx-background-color: green;");
-					*/
 				}
 			}
 		}
@@ -460,28 +388,6 @@ public class FullGame extends Application {
 							
 							//Reset The buttons
 							resetButtonAction();
-							/*if(enemy.isAlive()){
-								if(enemy.getTeam().equals("B")){
-									board[i][j].setStyle("-fx-border-color: lightblue;-fx-background-color: green;");
-								}
-								else
-									board[i][j].setStyle("-fx-border-color: red;-fx-background-color: green;");
-							}
-							if (i-1 >=0 && j-1 >=0 && map[0][i-1].getNode(j-1).getCharacter() == null){
-								board[i-1][j-1].setOnAction(this::processButtonPress);
-								board[i-1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-							}
-							if (j-2 >=0 && map[0][i].getNode(j-2).getCharacter() == null){
-								board[i][j-2].setOnAction(this::processButtonPress);
-								board[i][j-2].setStyle("-fx-border-color: black;-fx-background-color: green;");
-							}
-							if (i+1 < 8 && j-1 >= 0 && map[0][i+1].getNode(j-1).getCharacter() == null){
-								board[i+1][j-1].setOnAction(this::processButtonPress);
-								board[i+1][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-							}
-							board[i][j].setOnAction(this::processButtonPress);
-							board[i][j-1].setStyle("-fx-border-color: black;-fx-background-color: green;");
-							*/
 						}
 					}
 				}
@@ -587,6 +493,7 @@ public class FullGame extends Application {
 	    turnCount++;
 	    checkTurn();
 	}
+	
 	//The next four methods attack the Objectives (Tower)
 	//Also checks to see if the tower is destroyed
 	//If so, that team has won and calls the hasWon method
@@ -676,7 +583,7 @@ public class FullGame extends Application {
             stats.getChildren().clear();
             stats.setStyle("-fx-background-color:red");
             grid.setStyle("-fx-background-color:red");
-            title.setText("Red Team Turn");
+            title.setText("Red Team's Turn");
             stats.getChildren().add(title);
          }   
       }      
@@ -687,13 +594,19 @@ public class FullGame extends Application {
             stats.getChildren().clear();
             stats.setStyle("-fx-background-color:blue");
             grid.setStyle("-fx-background-color:blue");
-            title.setText("Blue Team Turn");
+            title.setText("Blue Team's Turn");
             stats.getChildren().add(title);
          }   
       }     
    } 
    
    public void hasWon(String team){
+	   //Sets all the button's actions to null
+	   for (int i = 0; i<8 ; i++){
+		   for(int j = 0;j<8 ;j++){
+			   board[i][j].setOnAction(null);
+		   }
+	   }
 	   VBox winner = new VBox();
 	   winner.setSpacing(10);
 	   Text message = new Text();
