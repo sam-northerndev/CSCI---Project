@@ -6,7 +6,7 @@ import javafx.scene.image.*;
 import java.io.*;
 public class Tank extends Character{
 	public Tank(String name, String team){
-		super (name,team,30,2,0,1,4);
+		super (name,team,30,2,0,1,2);
 		setType(3);
 		if(team.equals("B")){
 			setImage(new Image(new File("bluetank.png").toURI().toString()));

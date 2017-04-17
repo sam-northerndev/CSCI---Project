@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  */
 public class Warrior extends Character {
 	public Warrior(String name, String team){
-		super(name,team,20,3,0,2,3);
+		super(name,team,20,4,0,2,3);
 		setType(1);
 		if(team.equals("B")){
 			setImage(new Image(new File("bluewarrior.png").toURI().toString()));
