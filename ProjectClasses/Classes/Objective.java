@@ -5,16 +5,14 @@ public class Objective {
 	
 	public Objective(String color) {
 		team = color;
-		hp = 100;
+		hp = 20;
 		
 	}
 	public boolean destroyed() { // if the objective is destroyed
-		if (hp < 0) {
+		if (hp <= 0) 
 			return true;
-		}
-		else {
+		else 
 			return false;
-		}
 	}
 	public void attacked(Character c) { // loses hp if objective is attacked
 		hp -= c.attack();
@@ -29,7 +27,11 @@ public class Objective {
 		return team;
 	}
 	public String toString() {
-		return team;
+		if(team.equals("B"))
+			return "Blue";
+		else
+			return "Red";
+				
 	}
 	
 }

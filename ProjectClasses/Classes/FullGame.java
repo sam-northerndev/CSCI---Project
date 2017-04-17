@@ -235,8 +235,8 @@ public class FullGame extends Application {
 						stats.getChildren().clear();
 						//Display team name and HP remaining
 						title.setText("Objective");
-						name.setText("Team "+location.getObjective().getTeam());
-						hp.setText("HP: "+location.getObjective().getHp()+"/100");
+						name.setText("Team "+location.getObjective().toString());
+						hp.setText("HP: "+location.getObjective().getHp()+"/20");
 						stats.getChildren().addAll(title,name,hp);
 					}
 					else if(location.getEmptySpace() != null){
@@ -357,7 +357,7 @@ public class FullGame extends Application {
       checkTurn();
 	}
 	
-	//Method that attacks the character from the other team
+	//Methods that attacks the character from the other team
 	public void processAttackRight(ActionEvent event){
 		//Finds the index of the button that was pushed
 		//Finds the button that was pressed
@@ -575,6 +575,8 @@ public class FullGame extends Application {
 		}
 	}
    
+	//Method that checks if the current player's turn has ended
+	//If so, change team's turn
    public void checkTurn(){
       if (team.equals("B")){
          if (turnCount==2){
@@ -600,6 +602,8 @@ public class FullGame extends Application {
       }     
    } 
    
+   //Method that launches a window syaing that a player has won
+   //has method
    public void hasWon(String team){
 	   //Sets all the button's actions to null
 	   for (int i = 0; i<8 ; i++){
